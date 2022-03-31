@@ -46,6 +46,7 @@ movieRouter.post(routerDefault, async (req, res) => {
     
 });
 
+//update movie
 movieRouter.put(routerDefault, async (req, res) => {
   const {
     name,
@@ -56,9 +57,9 @@ movieRouter.put(routerDefault, async (req, res) => {
     evaluate,
   } = req?.body;
   const {id} = res?.params;
-  const checkMovieExist = checkNullId(id);
-  if(!checkMovieExist){
-    return await res.status(404).send(`Movie ${id} is not exist`);
+  const movieDetail = await getDetailMovie(id);
+  if(!movieDetail){
+    return res.status(500).send(`Movie ${id} is not exist`);
   }
   if(!name || !name.trim() || !trailer){
     return await res.status(400).send("error: must field name and trailer");
@@ -79,6 +80,7 @@ movieRouter.put(routerDefault, async (req, res) => {
     
 });
 
+//delete
 movieRouter.delete(`${routerDefault}:id`, async (req, res) =>{
   const {id} = req.params;
   const isExistMovie = await checkNullId(id);
@@ -94,4 +96,14 @@ movieRouter.delete(`${routerDefault}:id`, async (req, res) =>{
 })
 
 
-//lấy det
+//lấy detail
+movieRouter.get(`${routerDefault}:id`, async (req, res) => {
+  const {id} = req.params;
+  const movieDetail = await getDetailMovie(id);
+  if(!movieDetail){
+    return res.status(500).send(`Movie ${id} is not exist`);
+  }
+  return res.status(201).send(movieDetail);
+});
+
+module.exports = movieRouter;

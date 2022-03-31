@@ -59,3 +59,22 @@ const deleteMovieById = async (id) => {
 const getDetailMovie = async (id) => {
   try {
     const movie = await Movie.findOne({
+      where:{
+        id,
+      }
+    });
+
+    return movie;
+  } catch (error) {
+    console.log(error,"er del");
+    return null;
+  }
+}
+
+module.exports = {
+  getAllMovies,
+  getDetailMovie,
+  deleteMovieById,
+  checkNullId,
+  createMovie,
+}
