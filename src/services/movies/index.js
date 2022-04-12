@@ -17,64 +17,76 @@ const getAllMovies = async () => {
 };
 
 const createMovie = async (movies) => {
-  return await Movie.create(
-    movies
-  ).catch(error => {
+  return await Movie.create(movies).catch((error) => {
     console.log(error);
-    return null
-  })
-}
+    return null;
+  });
+};
+
+const updateMoviebyId = async (id, movies) => {
+  try {
+    const movie = Movie.update(movies,{
+      where: {
+        id,
+      },
+    })  
+    return movie;
+  } catch (error) {
+    return null;
+  }
+};
 
 const checkNullId = async (id) => {
   try {
     const movie = await Movie.findOne({
-      where:{
+      where: {
         id,
-      }
-    })
+      },
+    });
     if (!movie) {
       return false;
     }
-    return true
+    return true;
   } catch (error) {
     return false;
   }
-}
+};
 
 const deleteMovieById = async (id) => {
   try {
     const movie = await Movie.destroy({
-      where:{
+      where: {
         id,
-      }
+      },
     });
 
     return movie;
   } catch (error) {
-    console.log(error,"er del");
+    console.log(error, "er del");
     return null;
   }
-}
+};
 
 const getDetailMovie = async (id) => {
   try {
     const movie = await Movie.findOne({
-      where:{
+      where: {
         id,
-      }
+      },
     });
 
     return movie;
   } catch (error) {
-    console.log(error,"er del");
+    console.log(error, "er del");
     return null;
   }
-}
+};
 
 module.exports = {
   getAllMovies,
   getDetailMovie,
   deleteMovieById,
   checkNullId,
+  updateMoviebyId,
   createMovie,
-}
+};
