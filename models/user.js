@@ -14,12 +14,22 @@ module.exports = (sequelize, DataTypes) => {
       delete attribute.password;
       return attribute;
     }
-    static associate({Avatar}) {
+    static associate({Avatar,Movie,Ticket}) {
       // define association here
       this.hasMany(Avatar,{
         foreignKey: "userId",
-        as:'avatar'
+        as:'avatars',
+      
       });
+      this.hasOne(Avatar,{
+        foreignKey: "userId",
+        as:'avatar',
+      
+      });
+      this.belongsToMany(Movie,{
+        through: Ticket,
+        as:'movies'
+      })
     }
   }
   User.init({

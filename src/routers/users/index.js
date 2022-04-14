@@ -5,7 +5,7 @@ const config = require("../../config");
 const { authenticate } = require("../../middleware");
 const { uploadAvatar } = require("../../middleware/upload");
 const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail, getUserById, storageAvatar } = require("../../services/users");
+const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser } = require("../../services/users");
 
 const userRouter = express.Router();
 userRouter.post("/sign-up", async (req, res) => {
@@ -60,6 +60,18 @@ userRouter.post('/avatar', [authenticate, uploadAvatar(path)], async(req,res) =>
   const url = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`;
   const storeAvatar = await storageAvatar(user.id,url);
   return res.status(200).send(storeAvatar)
+})
+
+//lấy danh sách phim mà user đã xem
+userRouter.get('/history', [authenticate], async(req,res) => {
+  const {user} = req;
+  // chỗ này user đc lấy từ sequelize nên chỉ cần tạo cái alias bên models, thì có thể get movie đc
+  const data = await user.getMovies()
+  // const data = await getMovieHistoryByUser(user.id);
+  if(!data){
+    return res.status(500).send('cannot get data');
+  }
+  return res.status(200).send(data)
 })
 
 module.exports = userRouter;
