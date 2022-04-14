@@ -10,7 +10,7 @@ const authenticate = async (req, res, next) => {
     if (!user){
       return req.status(401).send('Invalid token');
     } 
-    req.body.user = user;
+    req.user = user;
     next();
   } catch (error) {
     res.status(401).send('You are unauthorized')

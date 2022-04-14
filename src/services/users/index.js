@@ -19,6 +19,10 @@ const getUserByEmail = async (email) => {
       where: {
         email,
       },
+      include: {
+        model: Avatar,
+        as: 'avatar'
+      }
     })
     return user
     
@@ -49,7 +53,10 @@ const storageAvatar = async (userId, url) => {
     await Avatar.update({isActive:false},{where:{
       userId,
       id:{
-        [Op.not]: avatar.id
+        //nghĩa là loại trừ avatar id đó ra thôi
+        //theo script thì sẽ là 
+        //where userId = 3 AND id not is 7
+        [Op.not]: avatar?.id
       }
     }})
     return avatar

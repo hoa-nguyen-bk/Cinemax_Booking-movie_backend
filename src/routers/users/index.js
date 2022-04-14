@@ -5,7 +5,7 @@ const config = require("../../config");
 const { authenticate } = require("../../middleware");
 const { uploadAvatar } = require("../../middleware/upload");
 const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail, getUserById } = require("../../services/users");
+const { createUser, getUserByEmail, getUserById, storageAvatar } = require("../../services/users");
 
 const userRouter = express.Router();
 userRouter.post("/sign-up", async (req, res) => {
@@ -56,11 +56,10 @@ userRouter.post("/sign-in", async (req, res) => {
 });
 const path = 'public/images/avatar';
 userRouter.post('/avatar', [authenticate, uploadAvatar(path)], async(req,res) => {
-  const user = req.user;
-  const {file} = req;
-  const urlAvatar = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`
-  
-  return res.status(200).send('upload image success')
+  const {file,user} = req;
+  const url = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`;
+  const storeAvatar = await storageAvatar(user.id,url);
+  return res.status(200).send(storeAvatar)
 })
 
 module.exports = userRouter;
