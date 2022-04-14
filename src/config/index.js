@@ -4,7 +4,7 @@ const config = {
   },
   SYSTEMS: {
     PORT: 3000,
-    HOST: ''
+    HOST: 'http://localhost:'
   }
 }
 module.exports = config

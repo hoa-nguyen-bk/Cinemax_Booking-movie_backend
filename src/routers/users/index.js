@@ -1,8 +1,11 @@
 "use strict";
 
 const express = require("express");
+const config = require("../../config");
+const { authenticate } = require("../../middleware");
+const { uploadAvatar } = require("../../middleware/upload");
 const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail } = require("../../services/users");
+const { createUser, getUserByEmail, getUserById } = require("../../services/users");
 
 const userRouter = express.Router();
 userRouter.post("/sign-up", async (req, res) => {
@@ -33,7 +36,6 @@ userRouter.post("/sign-up", async (req, res) => {
 
 userRouter.post("/sign-in", async (req, res) => {
   const { email, password } = req?.body;
-  console.log(email, password);
   //check valid data input
   if (!email) {
     return res.status(400).send(`Please fill Email`);
@@ -49,9 +51,16 @@ userRouter.post("/sign-in", async (req, res) => {
   if (!isMatchPassword) {
     return res.status(400).send("Password is not correct");
   }
-  console.log({id: user.id});
   const token = genToken({id: user.id});
   return res.status(200).send({user,token});
 });
+const path = 'public/images/avatar';
+userRouter.post('/avatar', [authenticate, uploadAvatar(path)], async(req,res) => {
+  const user = req.user;
+  const {file} = req;
+  const urlAvatar = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`
+  
+  return res.status(200).send('upload image success')
+})
 
 module.exports = userRouter;

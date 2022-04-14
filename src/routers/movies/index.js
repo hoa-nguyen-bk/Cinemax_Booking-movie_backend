@@ -75,7 +75,6 @@ movieRouter.delete(`${routerDefault}:id`,authenticate, async (req, res) => {
   const { id } = req.params;
   const isExistMovie = await checkNullId(id);
     // check user is exist by id 
-console.log(req.body.user,"user");
   if (!isExistMovie) {
     return res.status(404).send(`Movie ${id} is not exist`);
   }

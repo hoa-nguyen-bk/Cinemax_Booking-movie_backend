@@ -6,6 +6,7 @@
 
 const express = require("express");
 const rootRouter = require("./src/routers");
+const path = require('path')
 const { sequelize } = require("./models");
 const {SYSTEMS: {PORT}} = require("./src/config");
 const { logger } = require("./src/middleware/logger");
@@ -14,6 +15,7 @@ const { logger } = require("./src/middleware/logger");
 const app = express();
 
 app.use(express.json());
+app.use('/public', express.static(path.join(__dirname, 'public')))
 const mainUrl = "/api/v1";
 //dùng logger ở đây để tất cả request đều qua đây
 app.use(logger);

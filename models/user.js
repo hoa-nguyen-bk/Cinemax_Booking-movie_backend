@@ -14,8 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       delete attribute.password;
       return attribute;
     }
-    static associate(models) {
+    static associate({Avatar}) {
       // define association here
+      this.hasMany(Avatar,{
+        foreignKey: "userId"
+      });
     }
   }
   User.init({
