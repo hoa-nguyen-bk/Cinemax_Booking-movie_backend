@@ -1,6 +1,6 @@
 'use strict';
 const {Avatar,User,Movie} = require("../../../models");
-const {Op} = require("sequelize")
+const {Op} = require("sequelize");
 
 const createUser = async (user) => {
   try {
@@ -23,9 +23,9 @@ const getUserByEmail = async (email) => {
         {
           model: Avatar,
           as: 'avatar',
-          where: {
-            isActive: true
-          }
+          // where: {
+          //   isActive: true
+          // }
         },
         {
           model: Avatar,
@@ -79,8 +79,16 @@ const getMovieHistoryByUser = async (userId) => {
   return await User.findOne({
     where:{
       id: userId,
+      // ['movies.id']: {
+      //   [Op.not]: 1
+      // }
     },
-    // include: Movie
+    // include: [
+    //   {model : Movie, as: 'movies', where:{
+    //     [Op.not]: 1
+    //   }},
+    //   {model : Movie, as: 'movies'}
+    // ]
   })
   .then((res) => res)
   .catch((err) => {

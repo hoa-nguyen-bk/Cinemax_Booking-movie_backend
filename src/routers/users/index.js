@@ -66,12 +66,16 @@ userRouter.post('/avatar', [authenticate, uploadAvatar(path)], async(req,res) =>
 userRouter.get('/history', [authenticate], async(req,res) => {
   const {user} = req;
   // chỗ này user đc lấy từ sequelize nên chỉ cần tạo cái alias bên models, thì có thể get movie đc
-  const data = await user.getMovies()
-  // const data = await getMovieHistoryByUser(user.id);
+  // const data = await user.getMovies()
+  //còn đây là cách truyền thống
+  const data = await getMovieHistoryByUser(user.id);
   if(!data){
     return res.status(500).send('cannot get data');
   }
   return res.status(200).send(data)
 })
+
+
+
 
 module.exports = userRouter;
