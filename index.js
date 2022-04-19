@@ -10,6 +10,7 @@ const path = require('path')
 const { sequelize } = require("./models");
 const {SYSTEMS: {PORT}} = require("./src/config");
 const { logger } = require("./src/middleware/logger");
+const { graphqlHTTP } = require("express-graphql");
 
 //thằng app này sẽ là app cha bao hết ứng dụng
 const app = express();
@@ -21,6 +22,8 @@ const mainUrl = "/api/v1";
 app.use(logger);
 //lẩy rootRouter ra import zô đây mới ăn
 // app.use(mainUrl,rootRouter);
+//graphql
+app.use('/graphql',graphqlHTTP)
 
 sequelize
   .authenticate()
