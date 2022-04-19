@@ -3,17 +3,17 @@ const {buildSchema} = require("graphql");
 
 
 const graphqlSchema = buildSchema(`
-  type user = {
+  type User {
     id: Int!
     firstName: String!
     lastName: String!
     email: String!
-    birthday: Date!
+    birthday: String!
     password: String!
     phoneNumber: String!
     role: String!
   }
-  type rootQuery = {
+  type rootQuery {
     getAllUser: [User]!
   } 
   schema{
