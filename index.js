@@ -3,7 +3,8 @@
 //đầu tiên: yarn init -y
 //yarn add nodemon và express
 // đưa nodemon vào devDependencies
-
+const { createServer } = require('http');
+const {Server} = require('socket.io')
 const express = require("express");
 const rootRouter = require("./src/routers");
 const path = require('path')
@@ -39,7 +40,18 @@ sequelize
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
-
-app.listen(PORT, () => {
-  console.log("app listen to port ", PORT);
+const httpServer = createServer(app)
+httpServer.listen(PORT, ()=>{
+  console.log(`app listening on port ${PORT}`);
+})
+const io = new Server(httpServer)
+io.on('connection', socket => {
+  console.log(socket.id,"new connection");
+  socket.on('event', data => { /* … */ });
+  socket.on('disconnect', () => { 
+    console.log('disconect');
+   });
 });
+// app.listen(PORT, () => {
+//   console.log("app listen to port ", PORT);
+// });
