@@ -45,9 +45,30 @@ httpServer.listen(PORT, ()=>{
   console.log(`app listening on port ${PORT}`);
 })
 const io = new Server(httpServer)
+
+const arrUser = [
+  {user: "hòa minzy"},
+  {user: "hòa cute"}
+]
+
+
 io.on('connection', socket => {
   console.log(socket.id,"new connection");
-  socket.on('event', data => { /* … */ });
+  arrUser.push({user:socket.id});
+  socket.broadcast.emit('refresh-user',arrUser.filter(user => user.user !== socket.id))
+  //check coi token cos hop le
+  // socket.handshake.auth.token=""
+  socket.on('send-message', (message,callback) => {
+    console.log({message});
+    if(!message || !message.trim()){
+      return callback('empty mess')
+    }
+
+    //emit to all user
+    // io.emit('receive-message',message)
+    //emit to all user except sender
+    socket.broadcast.emit('receive-message',message)
+  });
   socket.on('disconnect', () => { 
     console.log('disconect');
    });
@@ -55,3 +76,6 @@ io.on('connection', socket => {
 // app.listen(PORT, () => {
 //   console.log("app listen to port ", PORT);
 // });
+
+
+
