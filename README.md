@@ -19,7 +19,7 @@ dùng nick
 
 **Sau đó **
 
-    heroku git:remote -a nodejs-express-mysql1
+    heroku git:remote -a project-backend-cybersoft1
 You can check the result of this step with  ``:
 
 ```bash
