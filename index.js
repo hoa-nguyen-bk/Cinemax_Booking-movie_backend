@@ -8,7 +8,7 @@ const express = require("express");
 const rootRouter = require("./src/routers");
 const path = require('path')
 const { sequelize } = require("./models");
-const {SYSTEMS: {LOCAL_PORT}} = require("./src/config");
+const {SYSTEMS: {PORT}} = require("./src/config");
 const { logger } = require("./src/middleware/logger");
 
 //thằng app này sẽ là app cha bao hết ứng dụng
@@ -22,7 +22,6 @@ app.use(logger);
 //lẩy rootRouter ra import zô đây mới ăn
 app.use(mainUrl,rootRouter);
 
-
 sequelize
   .authenticate()
   .then(() => {
@@ -32,7 +31,6 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 
-const PORT = process.env.PORT || LOCAL_PORT;
 app.listen(PORT, () => {
   console.log("app listen to port ", PORT);
 });
