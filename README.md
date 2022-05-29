@@ -48,5 +48,18 @@ mysql://be16359ee2a58c:91334c16@us-cdbr-east-05.cleardb.net/heroku_714e0d2370734
 
     mysql --host=us-cdbr-east-05.cleardb.net --user=be16359ee2a58c --password=91334c16 --reconnect heroku_714e0d2370734dd
 
+then let's run in heroku clear db
 
-heroku run node index.js  
+    heroku run node index.js  
+
+another setup in feat/express
+
+    mysql://ba7c77fbbb8b35:ad3b9bb0@us-cdbr-east-05.cleardb.net/heroku_316385522d009b6?reconnect=true
+
+and then go to mysql
+
+    mysql --host=us-cdbr-east-05.cleardb.net --user=ba7c77fbbb8b35 --password=ad3b9bb0 --reconnect heroku_316385522d009b6
+
+We alse have a procfile, which is declare here
+
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#define-a-procfile
