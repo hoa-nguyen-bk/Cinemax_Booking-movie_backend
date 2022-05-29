@@ -33,7 +33,8 @@ sequelize
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
-const PORT2 = process.env.PORT || PORT
-app.listen(PORT2, () => {
-  console.log("app listen to port ", PORT2);
-});
+
+  const PORT2 = process.env.PORT || PORT;
+  app.listen(PORT2, () => {
+    console.log("app listen to port ", PORT2);
+  });
