@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  server:
+    container_name: project-backend-cybersoft
+    build:
+      dockerfile: Dockerfile
+      context: .
+    # depends_on:
+  #     - database
+    environment:
+      PORT: 3030
+  #     DB_HOST: database
+  #     DB_PORT: 5432
+  #     DB_USERNAME: postgres
+  #     DB_PASSWORD: postgres
+  #     DB_NAME: offy
+  #     JWT_SECRET_KEY: offy
+  #   networks:
+  #     - nesjs-network
+  #   ports:
+  #     - 8080:8080
+  # offy-database:
+  #   container_name: offy_database
+  #   image: postgres:alpine
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: offy
+  #   networks:
+  #     - nesjs-network
+  #   volumes:
+  #     - postgre-database:/var/lib/postgresql/data
+  #   ports:
+  #     - 5432:5432
+
+# networks:
+#   nesjs-network:
+# volumes:
+#   postgre-database:
