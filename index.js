@@ -24,12 +24,6 @@ const mainUrl = "/api/v1";
 app.use(logger);
 //lẩy rootRouter ra import zô đây mới ăn
 app.use(mainUrl,rootRouter);
-//graphql
-app.use('/graphql',graphqlHTTP({
-  schema: graphqlSchema,
-  rootValue: graphqlResolves,
-  graphiql: true
-}))
 
 sequelize
   .authenticate()

@@ -8,13 +8,12 @@ const { scriptPassword, comparePassword, genToken } = require("../../services/au
 const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser, getAllUser } = require("../../services/users");
 
 const userRouter = express.Router();
-
-userRouter.get("", async (req, res) => {
-  const listUser = await getAllUser();
-  if (!listUser) {
-    res.status(500).send("Cannot get user list");
+userRouter.get("/", async (req, res) => {
+  const users = await getAllUser();
+  if (!users) {
+    res.status(500).send("Cannot get users list");
   }
-  res.send(listUser);
+  res.send(users);
 });
 
 userRouter.post("/sign-up", async (req, res) => {
