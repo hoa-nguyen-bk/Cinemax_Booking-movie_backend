@@ -5,9 +5,17 @@ const config = require("../../config");
 const { authenticate } = require("../../middleware");
 const { uploadAvatar } = require("../../middleware/upload");
 const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser } = require("../../services/users");
+const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser, getAllUser } = require("../../services/users");
 
 const userRouter = express.Router();
+userRouter.get("/", async (req, res) => {
+  const users = await getAllUser();
+  if (!users) {
+    res.status(500).send("Cannot get users list");
+  }
+  res.send(users);
+});
+
 userRouter.post("/sign-up", async (req, res) => {
   const { firstName, lastName, email, birthday, password, phoneNumber } =
     req?.body;

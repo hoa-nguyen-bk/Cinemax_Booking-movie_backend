@@ -2,6 +2,15 @@
 const {Avatar,User,Movie} = require("../../../models");
 const {Op} = require("sequelize");
 
+const getAllUser = async () => {
+  return await User.findAll()
+    .then((res) => res)
+    .catch((err) => {
+      console.log(err);
+      return null;
+    });
+};
+
 const createUser = async (user) => {
   try {
     const newUser = await User.create(user)
@@ -103,4 +112,5 @@ module.exports={
   getUserById,
   storageAvatar,
   getMovieHistoryByUser,
+  getAllUser,
 }
