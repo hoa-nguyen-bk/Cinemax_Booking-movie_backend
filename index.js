@@ -24,12 +24,6 @@ const mainUrl = "/api/v1";
 app.use(logger);
 //lẩy rootRouter ra import zô đây mới ăn
 app.use(mainUrl,rootRouter);
-//graphql
-app.use('/graphql',graphqlHTTP({
-  schema: graphqlSchema,
-  rootValue: graphqlResolves,
-  graphiql: true
-}))
 
 sequelize
   .authenticate()
@@ -40,6 +34,7 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 
-app.listen(PORT, () => {
-  console.log("app listen to port ", PORT);
-});
+  const PORT2 = process.env.PORT || PORT;
+  app.listen(PORT2, () => {
+    console.log("app listen to port ", PORT2);
+  });

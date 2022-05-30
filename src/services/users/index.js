@@ -3,11 +3,6 @@ const {Avatar,User,Movie} = require("../../../models");
 const {Op} = require("sequelize");
 
 const getAllUser = async () => {
-  try {
-    return await User.findAll()
-  } catch (error) {
-    throw new Error
-  }
   return await User.findAll()
     .then((res) => res)
     .catch((err) => {
@@ -118,4 +113,5 @@ module.exports={
   getAllUser,
   storageAvatar,
   getMovieHistoryByUser,
+  getAllUser,
 }
