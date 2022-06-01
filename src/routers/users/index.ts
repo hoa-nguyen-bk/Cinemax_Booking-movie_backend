@@ -1,11 +1,11 @@
 "use strict";
 
-const express = require("express");
-const config = require("../../config");
-const { authenticate } = require("../../middleware");
-const { uploadAvatar } = require("../../middleware/upload");
-const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser, getAllUser } = require("../../services/users");
+import express = require("express");
+import config = require("../../config");
+import { authenticate } from "../../middleware";
+import { uploadAvatar } from "../../middleware/upload";
+import { scriptPassword, comparePassword, genToken } from "../../services/auth";
+import { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser, getAllUser } from "../../services/users";
 
 const userRouter = express.Router();
 userRouter.get("/", async (req, res) => {
@@ -86,4 +86,4 @@ userRouter.get('/history', [authenticate], async(req,res) => {
 
 
 
-module.exports = userRouter;
+export default  userRouter;

@@ -1,15 +1,9 @@
 'use strict';
-const express = require("express");
-const { authenticate } = require("../../middleware");
-const { decodeToken } = require("../../services/auth");
-const {
-  getAllMovies,
-  createMovie,
-  checkNullId,
-  deleteMovieById,
-  getDetailMovie,
-  updateMoviebyId,
-} = require("./../../services/movies");
+import express = require("express");
+//todo
+// import { authenticate } from "../../middleware/index";
+import { decodeToken } from "../../services/auth";
+import { getAllMovies, createMovie, checkNullId, deleteMovieById, getDetailMovie, updateMoviebyId } from "./../../services/movies";
 
 const movieRouter = express.Router();
 
@@ -65,13 +59,13 @@ movieRouter.put(`/:id`, async (req, res) => {
     startTime,
     evaluate,
   });
-  console.log(result, "das");
-  res.status(201).send(result);
+  console.log(res, "das");
+  res.status(201).send(res);
   //  res.status(500).send(error);
 });
 
 //delete
-movieRouter.delete(`${routerDefault}:id`,authenticate, async (req, res) => {
+movieRouter.delete(`${routerDefault}:id`, async (req, res) => {
   const { id } = req.params;
   const isExistMovie = await checkNullId(id);
     // check user is exist by id 
@@ -95,4 +89,4 @@ movieRouter.get(`${routerDefault}:id`, async (req, res) => {
   return res.status(201).send(movieDetail);
 });
 
-module.exports = movieRouter;
+export default movieRouter;

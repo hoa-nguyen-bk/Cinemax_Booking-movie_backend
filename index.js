@@ -10,9 +10,6 @@ const path = require('path')
 const { sequelize } = require("./src/models");
 const {SYSTEMS: {PORT}} = require("./src/config");
 const { logger } = require("./src/middleware/logger");
-const { graphqlHTTP } = require("express-graphql");
-const graphqlSchema = require("./src/graphql/schema");
-const { graphqlResolves } = require("./src/graphql/resolvers");
 
 //thằng app này sẽ là app cha bao hết ứng dụng
 const app = express();

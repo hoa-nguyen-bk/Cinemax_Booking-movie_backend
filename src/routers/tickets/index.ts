@@ -10,4 +10,4 @@ ticketRouter.post('/ticket/:movieId',[authenticate],async(req,res) => {
   const ticket = await createTicket()
   return req.send("ok")
 })
-module.exports=ticketRouter
+export default ticketRouter;

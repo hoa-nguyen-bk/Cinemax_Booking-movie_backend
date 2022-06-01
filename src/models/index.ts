@@ -1,11 +1,11 @@
 'use strict';
-const {Sequelize} = require('sequelize');
+import { Sequelize } from 'sequelize';
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config')[env];
-const fs = require('fs');
-const path = require('path');
-const basename = path.basename(__filename);
-const db = {};
+import { readdirSync } from 'fs';
+import { basename as _basename, join } from 'path';
+const basename = _basename(__filename);
+const db:any = {};
 
 let sequelize;
 if (config?.use_env_variable) {
@@ -13,13 +13,13 @@ if (config?.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
-fs
-  .readdirSync(__dirname)
+readdirSync(__dirname)
   .filter(file => {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    //@ts-ignore
+    const model = require(join(__dirname, file))(sequelize, Sequelize?.DataTypes);
     db[model.name] = model;
   });
 
@@ -32,4 +32,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

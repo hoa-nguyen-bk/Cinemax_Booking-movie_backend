@@ -1,7 +1,7 @@
 const { decodeToken } = require("../services/auth");
 const {getUserById} = require("./../services/users")
 
-const authenticate = async (req, res, next) => {
+const authenticate = async (req: { header: (arg0: string) => string; status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): any; new(): any; }; }; user: any; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; }, next: () => void) => {
   try {
     const token = req?.header('Authorization')?.split(' ')[1];
     if (!token) return res.status(401).send('No token provided');
@@ -20,7 +20,7 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-const checkRole = (role) => (req, res, next) => {
+const checkRole = (role: any) => (req: { body: { user: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): any; new(): any; }; }; }, next: () => void) => {
   const user = req.body.user;
   if (user.role !== role) {
     return res.status(401).send("Can not access"); // loi authen 401
@@ -28,5 +28,5 @@ const checkRole = (role) => (req, res, next) => {
   next();
 };
 
-module.exports = {checkRole, authenticate };
+export {checkRole, authenticate };
 

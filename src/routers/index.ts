@@ -1,9 +1,9 @@
 'use strict';
 
-const express = require("express");
-const movieRouter = require("./movies");
-const ticketRouter = require("./tickets");
-const userRouter = require("./users");
+import express from "express";
+import movieRouter from "./movies";
+import ticketRouter from "./tickets";
+import userRouter from "./users";
 
 //rôi router từ thằng express
 const rootRouter = express.Router();

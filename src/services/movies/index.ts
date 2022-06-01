@@ -1,10 +1,9 @@
-"use strict";
-const { Movie } = require("../../models");
-
+import  Models  from "../../models";
+const {Movie} = Models.default;
 const getAllMovies = async () => {
   return await Movie.findAll()
-    .then((res) => res)
-    .catch((err) => {
+    .then((res: any) => res)
+    .catch((err: any) => {
       console.log(err);
       return null;
     });
@@ -16,14 +15,14 @@ const getAllMovies = async () => {
   // }
 };
 
-const createMovie = async (movies) => {
-  return await Movie.create(movies).catch((error) => {
+const createMovie = async (movies: any) => {
+  return await Movie.create(movies).catch((error: any) => {
     console.log(error);
     return null;
   });
 };
 
-const updateMoviebyId = async (id, movies) => {
+const updateMoviebyId = async (id: any, movies: any) => {
   try {
     const movie = Movie.update(movies,{
       where: {
@@ -36,7 +35,7 @@ const updateMoviebyId = async (id, movies) => {
   }
 };
 
-const checkNullId = async (id) => {
+const checkNullId = async (id: any) => {
   try {
     const movie = await Movie.findOne({
       where: {
@@ -52,7 +51,7 @@ const checkNullId = async (id) => {
   }
 };
 
-const deleteMovieById = async (id) => {
+const deleteMovieById = async (id: any) => {
   try {
     const movie = await Movie.destroy({
       where: {
@@ -67,7 +66,7 @@ const deleteMovieById = async (id) => {
   }
 };
 
-const getDetailMovie = async (id) => {
+const getDetailMovie = async (id: any) => {
   try {
     const movie = await Movie.findOne({
       where: {

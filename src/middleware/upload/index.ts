@@ -1,10 +1,10 @@
 const multer = require("multer");
-const uploadAvatar = (path) => {
+const uploadAvatar = (path: any) => {
   const storage = multer.diskStorage({
-    destination: (req, file, cp) => {
+    destination: (req: any, file: any, cp: (arg0: any, arg1: any) => void) => {
       cp(null, path);
     },
-    filename: (req, file, callback) => {
+    filename: (req: any, file: { originalname: string; }, callback: (arg0: any, arg1: string) => void) => {
       // if want to make a weird file name
       const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
       // callback(null, file.fieldname + '-' + uniqueSuffix)
@@ -16,7 +16,7 @@ const uploadAvatar = (path) => {
     limits: {
       fileSize: 1000000
     },
-    fileFilter: (req, file, callback) => {
+    fileFilter: (req: any, file: { originalname: string; }, callback: (arg0: Error, arg1: boolean) => void) => {
       const isValidType = new RegExp('^.*\.(jpg|JPG|jpeg|JPEG|gif|GIF|doc|DOC|pdf|PDF)$').test(file.originalname);
       
       if(isValidType){
@@ -28,6 +28,6 @@ const uploadAvatar = (path) => {
   });
   return upload.single('avatar')
 };
-module.exports = {
+export {
   uploadAvatar,
 };

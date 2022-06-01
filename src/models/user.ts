@@ -1,8 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+export default function (sequelize: any, DataTypes: { STRING: any; DATE: any; }) {
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -10,26 +8,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     toJSON() {
-      let attribute = Object.assign({},this.get());
+      let attribute = Object.assign({}, this.get());
       delete attribute.password;
       return attribute;
     }
-    static associate({Avatar,Movie,Ticket}) {
+    static associate({ Avatar, Movie, Ticket }) {
       // define association here
-      this.hasMany(Avatar,{
+      this.hasMany(Avatar, {
         foreignKey: "userId",
-        as:'avatars',
-      
+        as: 'avatars',
       });
-      this.hasOne(Avatar,{
+      this.hasOne(Avatar, {
         foreignKey: "userId",
-        as:'avatar',
-      
+        as: 'avatar',
       });
-      this.belongsToMany(Movie,{
+      this.belongsToMany(Movie, {
         through: Ticket,
-        as:'movies'
-      })
+        as: 'movies'
+      });
     }
   }
   User.init({

@@ -1,7 +1,7 @@
 'use strict';
-const {Avatar,User,Movie} = require("../../models");
 const {Op} = require("sequelize");
-
+import  Models  from "../../models";
+const {Avatar,User,Movie} = Models.default;
 const getAllUser = async () => {
   return await User.findAll()
     .then((res) => res)
@@ -113,5 +113,4 @@ module.exports={
   getAllUser,
   storageAvatar,
   getMovieHistoryByUser,
-  getAllUser,
 }
