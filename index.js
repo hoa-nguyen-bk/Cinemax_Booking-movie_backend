@@ -7,7 +7,7 @@
 const express = require("express");
 const rootRouter = require("./src/routers");
 const path = require('path')
-const { sequelize } = require("./models");
+const { sequelize } = require("./src/models");
 const {SYSTEMS: {PORT}} = require("./src/config");
 const { logger } = require("./src/middleware/logger");
 const { graphqlHTTP } = require("express-graphql");
