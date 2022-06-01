@@ -1,10 +1,10 @@
 'use strict';
 const {Sequelize} = require('sequelize');
-const config = require('./../config/db.config');
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config')[env];
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
 const db = {};
 
 let sequelize;
@@ -30,8 +30,6 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;
-module.exports = {
-  sequelize
-}
