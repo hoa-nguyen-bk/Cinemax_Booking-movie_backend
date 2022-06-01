@@ -1,4 +1,3 @@
-"use strict";
 import { genSaltSync, hashSync, compareSync } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import config from "../../config";

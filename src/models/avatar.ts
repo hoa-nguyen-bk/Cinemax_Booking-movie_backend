@@ -1,4 +1,3 @@
-"use strict";
 import { Model } from "sequelize";
 module.exports = (sequelize: any, DataTypes: { STRING: any; INTEGER: any; BOOLEAN: any; }) => {
   class Avatar extends Model {

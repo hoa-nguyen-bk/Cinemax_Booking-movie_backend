@@ -106,7 +106,7 @@ const getMovieHistoryByUser = async (userId) => {
   });
 }
 
-module.exports={
+export {
   createUser,
   getUserByEmail,
   getUserById,

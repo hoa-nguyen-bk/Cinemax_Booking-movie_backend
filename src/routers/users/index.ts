@@ -1,7 +1,6 @@
-"use strict";
 
 import express = require("express");
-import config = require("../../config");
+import config from "../../config";
 import { authenticate } from "../../middleware";
 import { uploadAvatar } from "../../middleware/upload";
 import { scriptPassword, comparePassword, genToken } from "../../services/auth";

@@ -1,7 +1,9 @@
+import { ErrorRequestHandler } from "express";
+
 const { decodeToken } = require("../services/auth");
 const {getUserById} = require("./../services/users")
 
-const authenticate = async (req: { header: (arg0: string) => string; status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): any; new(): any; }; }; user: any; }, res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; }, next: () => void) => {
+const authenticate = async (req, res, next):Promise<ErrorRequestHandler> => {
   try {
     const token = req?.header('Authorization')?.split(' ')[1];
     if (!token) return res.status(401).send('No token provided');
@@ -14,9 +16,7 @@ const authenticate = async (req: { header: (arg0: string) => string; status: (ar
     req.user = user;
     next();
   } catch (error) {
-
-    res.status(401).send('Token is not valid. You are unauthorized')
-    return console.log({error});
+    return res.status(401).send('Token is not valid. You are unauthorized')
   }
 };
 
