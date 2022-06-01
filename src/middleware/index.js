@@ -4,6 +4,7 @@ const {getUserById} = require("./../services/users")
 const authenticate = async (req, res, next) => {
   try {
     const token = req?.header('Authorization')?.split(' ')[1];
+    if (!token) return res.status(401).send('No token provided');
 
     const data = await decodeToken(token);
     const user = await getUserById(data.id);
@@ -13,8 +14,9 @@ const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).send('You are unauthorized')
-    return console.log(error);
+
+    res.status(401).send('Token is not valid. You are unauthorized')
+    return console.log({error});
   }
 };
 
