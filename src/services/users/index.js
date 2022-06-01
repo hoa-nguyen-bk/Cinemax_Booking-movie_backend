@@ -1,5 +1,5 @@
 'use strict';
-const {Avatar,User,Movie} = require("../../../models");
+const {Avatar,User,Movie} = require("../../models");
 const {Op} = require("sequelize");
 
 const getAllUser = async () => {
