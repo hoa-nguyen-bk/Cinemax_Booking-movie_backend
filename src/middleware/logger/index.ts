@@ -3,6 +3,6 @@ const logger = (req: { method: any; originalUrl: any; },_res: any,next: () => vo
   next()
 }
 
-module.exports = {
+export {
   logger
 }

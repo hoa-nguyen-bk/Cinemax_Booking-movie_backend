@@ -1,4 +1,4 @@
-'use strict';
+
 const {Op} = require("sequelize");
 import  Models  from "../../models";
 const {Avatar,User,Movie} = Models.default;

@@ -1,4 +1,4 @@
-'use strict';
+
 
 export default {
   async up (queryInterface: { bulkInsert: (arg0: string, arg1: { firstName: string; lastName: string; email: string; password: string; birthday: Date; phoneNumber: string; createdAt: Date; updatedAt: Date; }[], arg2: {}) => any; }, Sequelize: any) {

@@ -1,4 +1,4 @@
-'use strict';
+
 import express = require("express");
 //todo
 // import { authenticate } from "../../middleware/index";

@@ -7,6 +7,6 @@ const createTicket = async (userId: any, movieId: any) => {
     
   }
 }
-module.exports={
+export {
   createTicket
 }

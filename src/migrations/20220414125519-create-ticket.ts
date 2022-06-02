@@ -1,5 +1,5 @@
-'use strict';
-module.exports = {
+
+export default {
   async up(queryInterface: { createTable: (arg0: string, arg1: { id: { allowNull: boolean; autoIncrement: boolean; primaryKey: boolean; type: any; }; userId: { type: any; references: { model: string; key: string; }; }; movieId: { type: any; references: { model: string; key: string; }; }; createdAt: { allowNull: boolean; type: any; }; updatedAt: { allowNull: boolean; type: any; }; }) => any; }, Sequelize: { INTEGER: any; DATE: any; }) {
     await queryInterface.createTable('Tickets', {
       id: {

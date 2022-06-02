@@ -1,6 +1,6 @@
-'use strict';
+
 import { Model } from 'sequelize';
-module.exports = (sequelize: any, DataTypes: { INTEGER: any; }) => {
+export default (sequelize: any, DataTypes: { INTEGER: any; }) => {
   class Ticket extends Model {
     /**
      * Helper method for defining associations.

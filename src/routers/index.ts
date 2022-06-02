@@ -1,6 +1,6 @@
-'use strict';
 
-import express from "express";
+
+const express = require("express");
 import movieRouter from "./movies";
 import ticketRouter from "./tickets";
 import userRouter from "./users";
@@ -19,4 +19,4 @@ rootRouter.get('/',(request, response) => {
 })
 
 
-module.exports = rootRouter;
+export default rootRouter;

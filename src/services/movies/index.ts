@@ -81,7 +81,7 @@ const getDetailMovie = async (id: any) => {
   }
 };
 
-module.exports = {
+export {
   getAllMovies,
   getDetailMovie,
   deleteMovieById,

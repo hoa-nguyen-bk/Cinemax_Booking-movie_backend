@@ -1,5 +1,5 @@
 import { Model } from "sequelize";
-module.exports = (sequelize: any, DataTypes: { STRING: any; INTEGER: any; BOOLEAN: any; }) => {
+export default (sequelize: any, DataTypes: { STRING: any; INTEGER: any; BOOLEAN: any; }) => {
   class Avatar extends Model {
     /**
      * Helper method for defining associations.

@@ -1,4 +1,4 @@
-'use strict';
+
 import { Model } from 'sequelize';
 export default function (sequelize: any, DataTypes: { STRING: any; DATE: any; }) {
   class User extends Model {

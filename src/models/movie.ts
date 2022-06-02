@@ -1,6 +1,6 @@
-'use strict';
+
 import { Model } from 'sequelize';
-module.exports = (sequelize: any, DataTypes: { STRING: any; DATE: any; INTEGER: any; }) => {
+export default (sequelize: any, DataTypes: { STRING: any; DATE: any; INTEGER: any; }) => {
   class Movie extends Model {
     /**
      * Helper method for defining associations.
