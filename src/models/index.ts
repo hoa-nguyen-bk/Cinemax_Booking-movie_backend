@@ -7,11 +7,11 @@ import { basename as _basename, join } from 'path';
 const basename = _basename(__filename);
 const db:any = {};
 
-let sequelize;
+let sequelize: Sequelize;
 if (config?.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(process.env[config.use_env_variable] as string, config);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config?.database, config?.username, config?.password, config);
 }
 readdirSync(__dirname)
   .filter(file => {
@@ -32,4 +32,5 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+export {sequelize}
 export default db;

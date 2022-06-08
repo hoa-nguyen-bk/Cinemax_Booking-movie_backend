@@ -1,5 +1,5 @@
 
-
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 import movieRouter from "./movies";
 import ticketRouter from "./tickets";
@@ -14,7 +14,7 @@ rootRouter.use('/users', userRouter);
 rootRouter.use('/ticket', ticketRouter);
 
 //define ra đường dẫn chính/phụ
-rootRouter.get('/',(request, response) => {
+rootRouter.get('/',(_request: any, response: { send: (arg0: string) => void; }) => {
   response.send('hello word')
 })
 

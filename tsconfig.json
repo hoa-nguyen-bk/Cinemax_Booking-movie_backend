@@ -1,8 +1,32 @@
 {
-  "compilerOptions": {
+  "compilerOptions": { 
+    "target": "es2017",
     "outDir": "./built",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "checkJs": true,
     "allowJs": true,
-    "target": "es5"
-  },
-  "include": ["./src/**/*", "index.ts"]
+    "moduleResolution": "node",
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "es6"
+    ],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowUnreachableCode": true,
+     "useUnknownInCatchVariables": false,  // TypeScript 4.4+ only!
+},
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "<node_internals>/**",
+  ]
 }
