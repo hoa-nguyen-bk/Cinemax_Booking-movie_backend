@@ -2,26 +2,37 @@
 const { Avatar, User, Movie } = require("../../models");
 const { Op } = require("sequelize");
 
-const getAllUser = async ({current, pageSize}) => {
-  let page = current && current > 0? parseInt(current) - 1:0;
-  let limit = pageSize && pageSize > 0 ? parseInt(pageSize):10;
-  const offset = page * limit;
-  return await User.findAndCountAll().then((data) => {
-    let pages = Math.ceil(data.count/limit);
-    return User.findAll({
-      attributes: ['id','lastName','firstName','email','birthday','phoneNumber','role'],
-      limit,
-      offset,
+const getAllUser = async ({ current, pageSize, search }) => {
+  return await User.findAndCountAll()
+    .then((data) => {
+      let page = current && current > 0 ? parseInt(current) - 1 : 0;
+      let limit = pageSize && pageSize > 0 ? parseInt(pageSize) : data.count;
+      const offset = page * limit;
+      let pages = Math.ceil(data.count / limit);
+      return User.findAll({
+        attributes: [
+          "id",
+          "lastName",
+          "firstName",
+          "email",
+          "birthday",
+          "phoneNumber",
+          "role",
+        ],
+        limit,
+        offset,
+        where: { firstName: { [Op.like]: `%${search}%` } },
+      })
+        .then((res) => ({ result: res, count: data.count, pages }))
+        .catch((userFindAllError) => {
+          console.log({ userFindAllError });
+          return null;
+        });
     })
-    .then((res) => ({result: res, count: data.count, pages}))
-    .catch((userFindAllError) => {
-      console.log({userFindAllError});
+    .catch((userFindAndCountAllError) => {
+      console.log({ userFindAndCountAllError });
       return null;
     });
-  }).catch((userFindAndCountAllError) => {
-    console.log({userFindAndCountAllError});
-    return null;
-  });
 };
 
 const createUser = async (user) => {
@@ -62,17 +73,47 @@ const getUserByEmail = async (email) => {
 };
 
 const getUserById = async (id) => {
+  return await User.findOne({
+    where: {
+      id,
+    },
+  })
+    .then((user) => {
+      console.log({ user });
+      return user;
+    })
+    .catch((error) => {
+      return console.log(error, "err nè");
+    });
+};
+const checkNullUserId = async (id) => {
   try {
-    //sẽ lụm thằng đầu tiên theo index
     const user = await User.findOne({
       where: {
         id,
       },
     });
-    return user;
+    if (!user) {
+      return false;
+    }
+    return true;
   } catch (error) {
-    return console.log(error, "err nè");
+    return false;
   }
+};
+
+const updateUserbyId = async (id, data) => {
+  return await User.update(data, {
+    where: {
+      id,
+    },
+  })
+    .then((user) => {
+      return user;
+    })
+    .catch((error) => {
+      return null;
+    });
 };
 
 const storageAvatar = async (userId, url) => {
@@ -120,13 +161,28 @@ const getMovieHistoryByUser = async (userId) => {
       return null;
     });
 };
+const deleteUserById = async (id) => {
+  try {
+    const user = await User.destroy({
+      where: {
+        id,
+      },
+    });
 
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
 module.exports = {
   createUser,
   getUserByEmail,
+  checkNullUserId,
   getUserById,
   getAllUser,
   storageAvatar,
+  updateUserbyId,
   getMovieHistoryByUser,
   getAllUser,
+  deleteUserById,
 };

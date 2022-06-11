@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const { authenticate } = require("../middleware");
 const movieRouter = require("./movies");
 const ticketRouter = require("./tickets");
 const userRouter = require("./users");
@@ -14,6 +15,15 @@ rootRouter.use("/movies", movieRouter);
 rootRouter.use("/users", userRouter);
 rootRouter.use("/ticket", ticketRouter);
 rootRouter.use("/roles", roleRouter);
+//lấy thông tin tài khoản
+rootRouter.get("/profile", [authenticate], async (req, res) => {
+  console.log("profile");
+  const { user } = req;
+  if (!user) {
+    return res.status(500).send("cannot get user, please login again");
+  }
+  return res.status(200).send(user);
+});
 
 //define ra đường dẫn chính/phụ
 rootRouter.get("/", (request, response) => {

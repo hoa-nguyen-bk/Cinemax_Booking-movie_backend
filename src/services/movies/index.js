@@ -25,7 +25,7 @@ const createMovie = async (movies) => {
 
 const updateMoviebyId = async (id, movies) => {
   try {
-    const movie = Movie.update(movies,{
+    const movie = await Movie.update(movies,{
       where: {
         id,
       },

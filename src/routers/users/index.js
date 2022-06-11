@@ -16,24 +16,64 @@ const {
   storageAvatar,
   getMovieHistoryByUser,
   getAllUser,
+  checkNullUserId,
+  updateUserbyId,
+  deleteUserById,
 } = require("../../services/users");
 
 const userRouter = express.Router();
 userRouter.get("/", async (req, res) => {
-  const { current, pageSize } = req?.query;
+  const { current, pageSize, search } = req?.query;
 
-  const users = await getAllUser({current, pageSize });
+  const users = await getAllUser({ current, pageSize, search });
   if (!users) {
     return res.status(500).send("Cannot get users list");
   }
   const result = {
-    currentPage: parseInt(current),
-    count: parseInt(pageSize),
     totalPages: users.pages,
     totalCount: users.count,
-    items: users.result
-  }
+    items: users.result,
+  };
   return res.send(result);
+});
+//lấy detail
+userRouter.get(`/:id`, async (req, res) => {
+  const { id } = req.params;
+  const userDetail = await getUserById(id);
+  if (!userDetail) {
+    return res.status(500).send(`User ${id} is not exist`);
+  }
+  return res.status(201).send(userDetail);
+});
+
+//cập nhật thông tin user
+userRouter.put(`/:id`, async (req, res) => {
+  const { lastName, firstName, email, birthday, phoneNumber, password } =
+    req?.body;
+  const { id = "" } = req?.params;
+  const isExistUser = await checkNullUserId(id);
+  if (!isExistUser) {
+    return res.status(404).send(`User ${id} is not exist`);
+  }
+  if (!firstName || !lastName || !email) {
+    return await res
+      .status(400)
+      .send("error: must field firstName, last name and email");
+  }
+  return await updateUserbyId(id, {
+    firstName,
+    lastName,
+    birthday,
+    email,
+    phoneNumber,
+    password: scriptPassword(password),
+  })
+    .then((result) => {
+      return res.status(201).send(req?.body);
+    })
+    .catch((error) => {
+      return res.status(500).send(error);
+    });
 });
 
 userRouter.post("/sign-up", async (req, res) => {
@@ -106,5 +146,23 @@ userRouter.get("/history", [authenticate], async (req, res) => {
   }
   return res.status(200).send(data);
 });
+
+
+
+//delete
+userRouter.delete(`/:id`, async (req, res) => {
+  const { id } = req.params;
+  const isExistUser = await checkNullUserId(id);
+    // check user is exist by id 
+  if (!isExistUser) {
+    return res.status(404).send(`User ${id} is not exist`);
+  }
+  const userDeleted = await deleteUserById(id);
+  if (!userDeleted) {
+    return res.status(500).send(`user ${id} cannot delete`);
+  }
+  return res.status(201).send(`Delete user ${id} success`);
+});
+
 
 module.exports = userRouter;
