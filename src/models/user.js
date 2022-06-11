@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         as:'avatar',
       
       });
+      
       this.belongsToMany(Movie,{
         through: Ticket,
         as:'movies'

@@ -11,9 +11,9 @@ const userRouter = express.Router();
 userRouter.get("/", async (req, res) => {
   const users = await getAllUser();
   if (!users) {
-    res.status(500).send("Cannot get users list");
+    return res.status(500).send("Cannot get users list");
   }
-  res.send(users);
+  return res.send(users);
 });
 
 userRouter.post("/sign-up", async (req, res) => {

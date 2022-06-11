@@ -72,3 +72,16 @@ Also, you need to set the environment variables for your running Heroku's app:
 We alse have a procfile, which is declare here
 
 https://devcenter.heroku.com/articles/getting-started-with-nodejs#define-a-procfile
+
+
+**Các bước tạo một database mới**
+
+Ví dụ: làm một api lấy danh sách quyền của người dùng
+B1: chạy câu lệnh trong terminal để tạo model role
+```
+sequelize model:generate --name Role --attributes type:string,description:string
+```
+B2: chạy migrate để tạo ra các column trong table của database
+```
+sequelize db:migrate
+```
