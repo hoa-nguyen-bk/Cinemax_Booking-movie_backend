@@ -144,16 +144,16 @@ const getMovieHistoryByUser = async (userId) => {
   return await User.findOne({
     where: {
       id: userId,
-      // ['movies.id']: {
-      //   [Op.not]: 1
-      // }
     },
-    // include: [
-    //   {model : Movie, as: 'movies', where:{
-    //     [Op.not]: 1
-    //   }},
-    //   {model : Movie, as: 'movies'}
-    // ]
+    include: [
+      {
+        model: Movie,
+        as: "movies",
+        where: {
+          [Op.not]: 1,
+        },
+      },
+    ],
   })
     .then((res) => res)
     .catch((err) => {

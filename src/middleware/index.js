@@ -3,12 +3,9 @@ const { getUserById } = require("./../services/users");
 
 const authenticate = async (req, res, next) => {
   try {
-    console.log("going on");
     const token = req?.header("Authorization")?.split(" ")[1];
     if (!token) return res.status(401).send("No token provided");
-    console.log({token});
     const data = await decodeToken(token);
-    console.log({data});
     if (!data || !data?.id) {
       return res.status(401).send("Wrong input token, please login again");
     }

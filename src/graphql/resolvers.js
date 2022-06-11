@@ -19,7 +19,6 @@ const graphqlResolves = {
           },
         ]
       });
-      console.log(userList,"userList");
       return userList;
     } catch (error) {
       throw new Error(error);

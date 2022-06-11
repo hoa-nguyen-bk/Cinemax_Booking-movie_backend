@@ -37,8 +37,8 @@ userRouter.get("/", async (req, res) => {
   return res.send(result);
 });
 //lấy detail
-userRouter.get(`/:id`, async (req, res) => {
-  const { id } = req.params;
+userRouter.get(`/detail`, async (req, res) => {
+  const { id } = req.query;
   const userDetail = await getUserById(id);
   if (!userDetail) {
     return res.status(500).send(`User ${id} is not exist`);
@@ -140,20 +140,31 @@ userRouter.get("/history", [authenticate], async (req, res) => {
   // chỗ này user đc lấy từ sequelize nên chỉ cần tạo cái alias bên models, thì có thể get movie đc
   // const data = await user.getMovies()
   //còn đây là cách truyền thống
-  const data = await getMovieHistoryByUser(user.id);
-  if (!data) {
-    return res.status(500).send("cannot get data");
-  }
-  return res.status(200).send(data);
+  console.log(user.id,"user.id");
+  return await getMovieHistoryByUser(user.id)
+    .then((result) => {
+      console.log({result});
+      return res.status(200).send(result);
+    })
+    .catch((err) => {
+      return res.status(500).send("cannot get history");
+    });
 });
 
-
+//lấy thông tin tài khoản
+userRouter.get("/profile", [authenticate], async (req, res) => {
+  const { user } = req;
+  if (!user) {
+    return res.status(500).send("cannot get user, please login again");
+  }
+  return res.status(200).send(user);
+});
 
 //delete
 userRouter.delete(`/:id`, async (req, res) => {
   const { id } = req.params;
   const isExistUser = await checkNullUserId(id);
-    // check user is exist by id 
+  // check user is exist by id
   if (!isExistUser) {
     return res.status(404).send(`User ${id} is not exist`);
   }
@@ -163,6 +174,5 @@ userRouter.delete(`/:id`, async (req, res) => {
   }
   return res.status(201).send(`Delete user ${id} success`);
 });
-
 
 module.exports = userRouter;
