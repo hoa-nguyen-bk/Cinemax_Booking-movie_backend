@@ -2,16 +2,26 @@
 const { Avatar, User, Movie } = require("../../models");
 const { Op } = require("sequelize");
 
-const getAllUser = async ({ offset, limit}) => {
-  return await User.findAll({
-    limit,
-    offset,
-  })
-    .then((res) => res)
-    .catch((err) => {
-      console.log(err);
+const getAllUser = async ({current, pageSize}) => {
+  let page = current && current > 0? parseInt(current) - 1:0;
+  let limit = pageSize && pageSize > 0 ? parseInt(pageSize):10;
+  const offset = page * limit;
+  return await User.findAndCountAll().then((data) => {
+    let pages = Math.ceil(data.count/limit);
+    return User.findAll({
+      attributes: ['id','lastName','firstName','email','birthday','phoneNumber','role'],
+      limit,
+      offset,
+    })
+    .then((res) => ({result: res, count: data.count, pages}))
+    .catch((userFindAllError) => {
+      console.log({userFindAllError});
       return null;
     });
+  }).catch((userFindAndCountAllError) => {
+    console.log({userFindAndCountAllError});
+    return null;
+  });
 };
 
 const createUser = async (user) => {

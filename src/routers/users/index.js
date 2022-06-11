@@ -19,20 +19,21 @@ const {
 } = require("../../services/users");
 
 const userRouter = express.Router();
-userRouter.get("", async (req, res) => {
-  const { current, pageSize } = req?.params;
-  let page = current && current > 0? current - 1:0;
-  let limit = pageSize && pageSize > 0 ? parseInt(pageSize):10;
-  const offset = page * limit;
-  console.log({offset});
+userRouter.get("/", async (req, res) => {
+  const { current, pageSize } = req?.query;
 
-
-
-  const users = await getAllUser({ offset, limit });
+  const users = await getAllUser({current, pageSize });
   if (!users) {
     return res.status(500).send("Cannot get users list");
   }
-  return res.send(users);
+  const result = {
+    currentPage: parseInt(current),
+    count: parseInt(pageSize),
+    totalPages: users.pages,
+    totalCount: users.count,
+    items: users.result
+  }
+  return res.send(result);
 });
 
 userRouter.post("/sign-up", async (req, res) => {
