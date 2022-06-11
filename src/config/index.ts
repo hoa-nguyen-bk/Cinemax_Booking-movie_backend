@@ -1,9 +1,11 @@
-type configDB = {
+import { Dialect } from "sequelize/types";
+
+export type configDB = {
   username: string;
   password: string;
   database: string;
   host: string;
-  dialect: string;
+  dialect: Dialect;
 };
 type configType = {
   auth: {
