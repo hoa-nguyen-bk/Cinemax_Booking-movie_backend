@@ -4,12 +4,31 @@ const express = require("express");
 const config = require("../../config");
 const { authenticate } = require("../../middleware");
 const { uploadAvatar } = require("../../middleware/upload");
-const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser, getAllUser } = require("../../services/users");
+const {
+  scriptPassword,
+  comparePassword,
+  genToken,
+} = require("../../services/auth");
+const {
+  createUser,
+  getUserByEmail,
+  getUserById,
+  storageAvatar,
+  getMovieHistoryByUser,
+  getAllUser,
+} = require("../../services/users");
 
 const userRouter = express.Router();
-userRouter.get("/", async (req, res) => {
-  const users = await getAllUser();
+userRouter.get("", async (req, res) => {
+  const { current, pageSize } = req?.params;
+  let page = current && current > 0? current - 1:0;
+  let limit = pageSize && pageSize > 0 ? parseInt(pageSize):10;
+  const offset = page * limit;
+  console.log({offset});
+
+
+
+  const users = await getAllUser({ offset, limit });
   if (!users) {
     return res.status(500).send("Cannot get users list");
   }
@@ -30,7 +49,7 @@ userRouter.post("/sign-up", async (req, res) => {
     birthday,
     password: scriptPassword(password),
     phoneNumber,
-    role: 'user'
+    role: "user",
   })
     .then((response) => {
       const result = { ...response };
@@ -59,31 +78,32 @@ userRouter.post("/sign-in", async (req, res) => {
   if (!isMatchPassword) {
     return res.status(400).send("Password is not correct");
   }
-  const token = genToken({id: user.id});
-  return res.status(200).send({user,token});
+  const token = genToken({ id: user.id });
+  return res.status(200).send({ user, token });
 });
-const path = 'public/images/avatar';
-userRouter.post('/avatar', [authenticate, uploadAvatar(path)], async(req,res) => {
-  const {file,user} = req;
-  const url = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`;
-  const storeAvatar = await storageAvatar(user.id,url);
-  return res.status(200).send(storeAvatar)
-})
+const path = "public/images/avatar";
+userRouter.post(
+  "/avatar",
+  [authenticate, uploadAvatar(path)],
+  async (req, res) => {
+    const { file, user } = req;
+    const url = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`;
+    const storeAvatar = await storageAvatar(user.id, url);
+    return res.status(200).send(storeAvatar);
+  }
+);
 
 //lấy danh sách phim mà user đã xem
-userRouter.get('/history', [authenticate], async(req,res) => {
-  const {user} = req;
+userRouter.get("/history", [authenticate], async (req, res) => {
+  const { user } = req;
   // chỗ này user đc lấy từ sequelize nên chỉ cần tạo cái alias bên models, thì có thể get movie đc
   // const data = await user.getMovies()
   //còn đây là cách truyền thống
   const data = await getMovieHistoryByUser(user.id);
-  if(!data){
-    return res.status(500).send('cannot get data');
+  if (!data) {
+    return res.status(500).send("cannot get data");
   }
-  return res.status(200).send(data)
-})
-
-
-
+  return res.status(200).send(data);
+});
 
 module.exports = userRouter;

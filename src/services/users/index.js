@@ -1,9 +1,12 @@
-'use strict';
-const {Avatar,User,Movie} = require("../../models");
-const {Op} = require("sequelize");
+"use strict";
+const { Avatar, User, Movie } = require("../../models");
+const { Op } = require("sequelize");
 
-const getAllUser = async () => {
-  return await User.findAll()
+const getAllUser = async ({ offset, limit}) => {
+  return await User.findAll({
+    limit,
+    offset,
+  })
     .then((res) => res)
     .catch((err) => {
       console.log(err);
@@ -13,8 +16,8 @@ const getAllUser = async () => {
 
 const createUser = async (user) => {
   try {
-    const newUser = await User.create(user)
-    return newUser
+    const newUser = await User.create(user);
+    return newUser;
   } catch (error) {
     console.log(error);
     return null;
@@ -31,24 +34,22 @@ const getUserByEmail = async (email) => {
       include: [
         {
           model: Avatar,
-          as: 'avatar',
+          as: "avatar",
           // where: {
           //   isActive: true
           // }
         },
         {
           model: Avatar,
-          as: 'avatars',
+          as: "avatars",
         },
-      ]
-    })
-    return user
-    
+      ],
+    });
+    return user;
   } catch (error) {
-    return console.log(error,"err");
+    return console.log(error, "err");
   }
-}
-
+};
 
 const getUserById = async (id) => {
   try {
@@ -57,36 +58,40 @@ const getUserById = async (id) => {
       where: {
         id,
       },
-    })
-    return user
-    
+    });
+    return user;
   } catch (error) {
-    return console.log(error,"err nè");
+    return console.log(error, "err nè");
   }
-}
+};
 
 const storageAvatar = async (userId, url) => {
   try {
-    const avatar = await Avatar.create({url, userId, isActive: true});
-    await Avatar.update({isActive:false},{where:{
-      userId,
-      id:{
-        //nghĩa là loại trừ avatar id đó ra thôi
-        //theo script thì sẽ là 
-        //where userId = 3 AND id not is 7
-        [Op.not]: avatar?.id
+    const avatar = await Avatar.create({ url, userId, isActive: true });
+    await Avatar.update(
+      { isActive: false },
+      {
+        where: {
+          userId,
+          id: {
+            //nghĩa là loại trừ avatar id đó ra thôi
+            //theo script thì sẽ là
+            //where userId = 3 AND id not is 7
+            [Op.not]: avatar?.id,
+          },
+        },
       }
-    }})
-    return avatar
+    );
+    return avatar;
   } catch (error) {
     console.log(error, "storeAvatar");
-    return null
+    return null;
   }
-}
+};
 
 const getMovieHistoryByUser = async (userId) => {
   return await User.findOne({
-    where:{
+    where: {
       id: userId,
       // ['movies.id']: {
       //   [Op.not]: 1
@@ -99,14 +104,14 @@ const getMovieHistoryByUser = async (userId) => {
     //   {model : Movie, as: 'movies'}
     // ]
   })
-  .then((res) => res)
-  .catch((err) => {
-    console.log(err);
-    return null;
-  });
-}
+    .then((res) => res)
+    .catch((err) => {
+      console.log(err);
+      return null;
+    });
+};
 
-module.exports={
+module.exports = {
   createUser,
   getUserByEmail,
   getUserById,
@@ -114,4 +119,4 @@ module.exports={
   storageAvatar,
   getMovieHistoryByUser,
   getAllUser,
-}
+};

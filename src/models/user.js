@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       delete attribute.password;
       return attribute;
     }
-    static associate({Avatar,Movie,Ticket}) {
+    static associate({Avatar,Movie,Ticket,Role}) {
       // define association here
       this.hasMany(Avatar,{
         foreignKey: "userId",
@@ -24,7 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(Avatar,{
         foreignKey: "userId",
         as:'avatar',
-      
+      });
+      this.belongsTo(Role,{
+        foreignKey: "role",
+        as:'roles',
       });
       
       this.belongsToMany(Movie,{
