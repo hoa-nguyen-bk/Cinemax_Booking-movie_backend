@@ -37,8 +37,9 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-// const runAwait = async () => await sequelize.sync({ force: true });
-// runAwait();
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
