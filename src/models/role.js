@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+
   Role.init({
     type: DataTypes.STRING,
     description: DataTypes.STRING,

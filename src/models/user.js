@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       // });
       this.belongsTo(Role,{
         foreignKey: "role",
-        as:'role',
+        as:'role_wtf',
       });
       // this.belongsToMany(Movie,{
       //   through: Ticket,

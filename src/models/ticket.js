@@ -11,11 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Movie, {
+        foreignKey: "movie",
+        // as: "movie",
+      })
+      this.belongsTo(models.Movie, {
+        foreignKey: "movie",
+        // as: "movie",
+      })
     }
   }
   Ticket.init({
-    userId: DataTypes.INTEGER,
-    movieId: DataTypes.INTEGER
+    // userId: DataTypes.INTEGER,
+    // movie: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Ticket',

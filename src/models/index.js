@@ -39,7 +39,7 @@ if (config?.use_env_variable) {
   //   );
   // })
   // console.log(arr, 'is array file');
-  ['user.js', 'role.js'].forEach((file) => {
+  ['user.js', 'role.js', 'movie.js', 'ticket.js'].forEach((file) => {
     const model = require(path.join(__dirname, file))(
       sequelize,
       Sequelize.DataTypes
@@ -61,8 +61,8 @@ db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 
-// const { User } = require("./user");
-// const { Role } = require("./role");
+const { User } = require("./user");
+const { Role } = require("./role");
 
 // const testModel = async () => {
 
@@ -79,6 +79,16 @@ db.sequelize.sync({ force: true }).then(() => {
 //     console.log(error);
 //     return null;
 //   });
+// }
+// const testModel = async () => {
+// // in ra nhung user co role la "user"
+// const userRoleUser = User.find(
+//   where: {
+//     role_wtf: {
+//       type: 'user'
+//     }
+//   }
+// );
 // }
 
 
