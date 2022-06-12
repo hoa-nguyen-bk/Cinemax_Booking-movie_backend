@@ -25,10 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         as:'avatar',
       });
-      this.hasOne(Role,{
-        foreignKey: "role",
+      this.belongsTo(Role,{
+        foreignKey: "roleId",
         as:'roles',
       });
+
       
       this.belongsToMany(Movie,{
         through: Ticket,
@@ -43,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     birthday: DataTypes.DATE,
     password: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    role: DataTypes.STRING
+    roleId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

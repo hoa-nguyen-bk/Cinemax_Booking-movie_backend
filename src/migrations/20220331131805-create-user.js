@@ -26,11 +26,12 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING
       },
-      role: {
+      roleId: {
         type: Sequelize.STRING,
+        allowNull: false,
         references: {
           model: "roles",
-          key: "type"
+          key: "id"
         }
       },
       createdAt: {
