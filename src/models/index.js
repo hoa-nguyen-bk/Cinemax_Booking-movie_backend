@@ -37,9 +37,11 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-db.sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
-});
+}).catch(err => {
+  console.log(err);
+})
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
