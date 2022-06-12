@@ -18,19 +18,35 @@ if (config?.use_env_variable) {
     config
   );
 }
-fs.readdirSync(__dirname)
-  .filter((file) => {
-    return (
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-    );
-  })
-  .forEach((file) => {
+// fs.readdirSync(__dirname)
+//   .filter((file) => {
+//     return (
+//       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+//     );
+//   })
+//   .forEach((file) => {
+//     const model = require(path.join(__dirname, file))(
+//       sequelize,
+//       Sequelize.DataTypes
+//     );
+//     db[model.name] = model;
+//   });
+
+  // const arr= fs.readdirSync(__dirname)
+  // .filter((file) => {
+  //   return (
+  //     file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+  //   );
+  // })
+  // console.log(arr, 'is array file');
+  ['user.js', 'role.js'].forEach((file) => {
     const model = require(path.join(__dirname, file))(
       sequelize,
       Sequelize.DataTypes
     );
     db[model.name] = model;
   });
+
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
@@ -44,5 +60,26 @@ db.Sequelize = Sequelize;
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
+
+// const { User } = require("./user");
+// const { Role } = require("./role");
+
+// const testModel = async () => {
+
+
+
+//   const user = await User.create({
+//     firstName: 'DataTypes.STRING',
+//     lastName: 'DataTypes.STRING',
+//     email: DataTypes.STRING,
+//     birthday: DataTypes.DATE,
+//     password: DataTypes.STRING,
+//     phoneNumber: DataTypes.STRING,
+//   }).catch((error) => {
+//     console.log(error);
+//     return null;
+//   });
+// }
+
 
 module.exports = db;

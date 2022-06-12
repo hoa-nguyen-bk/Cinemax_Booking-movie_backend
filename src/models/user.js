@@ -16,25 +16,23 @@ module.exports = (sequelize, DataTypes) => {
     }
     static associate({Avatar,Movie,Ticket,Role}) {
       // define association here
-      this.hasMany(Avatar,{
-        foreignKey: "userId",
-        as:'avatars',
+      // this.hasMany(Avatar,{
+      //   foreignKey: "userId",
+      //   as:'avatars',
       
+      // });
+      // this.hasOne(Avatar,{
+      //   foreignKey: "userId",
+      //   as:'avatar',
+      // });
+      this.belongsTo(Role,{
+        foreignKey: "role",
+        as:'role',
       });
-      this.hasOne(Avatar,{
-        foreignKey: "userId",
-        as:'avatar',
-      });
-      this.hasOne(Role,{
-        foreignKey: "roleId",
-        as:'roles',
-      });
-
-      
-      this.belongsToMany(Movie,{
-        through: Ticket,
-        as:'movies'
-      })
+      // this.belongsToMany(Movie,{
+      //   through: Ticket,
+      //   as:'movies'
+      // })
     }
   }
   User.init({
@@ -44,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     birthday: DataTypes.DATE,
     password: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    roleId: DataTypes.STRING
+    // roleId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
