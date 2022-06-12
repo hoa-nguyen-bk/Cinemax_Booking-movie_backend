@@ -20,7 +20,7 @@ const config = {
   production: dbConnect,
   localHoa: {
     username: "root",
-    password: "12345678",
+    password: "0",
     database: "hoa_movie",
     host: "localhost",
     dialect: "mysql",
