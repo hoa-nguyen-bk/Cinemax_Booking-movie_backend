@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Ticket.init({
-    userId: DataTypes.INTEGER,
-    movieId: DataTypes.INTEGER
+    userId: DataTypes.STRING,
+    movieId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Ticket',

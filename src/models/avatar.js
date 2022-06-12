@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Avatar.init({
     url: DataTypes.STRING,
-    userId: DataTypes.INTEGER,
+    userId: DataTypes.STRING,
     isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
