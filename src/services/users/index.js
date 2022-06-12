@@ -35,9 +35,12 @@ const getAllUser = async ({ current, pageSize, search }) => {
     });
 };
 
-const createUser = async (user) => {
+const createUser = async (user,role) => {
   try {
-    const newUser = await User.create(user);
+    const newUser = await User.create({
+      ...user,
+      role,
+    });
     return newUser;
   } catch (error) {
     console.log(error);

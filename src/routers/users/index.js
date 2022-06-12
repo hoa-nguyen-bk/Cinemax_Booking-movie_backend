@@ -90,8 +90,7 @@ userRouter.post("/sign-up", async (req, res) => {
     birthday,
     password: scriptPassword(password),
     phoneNumber,
-    role: "user",
-  })
+  },"user")
     .then((response) => {
       const result = { ...response };
       delete result.password;

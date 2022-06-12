@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         as:'avatar',
       });
-      this.belongsTo(Role,{
+      this.hasOne(Role,{
         foreignKey: "role",
         as:'roles',
       });

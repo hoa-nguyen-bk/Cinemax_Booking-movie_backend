@@ -11,7 +11,7 @@ const authenticate = async (req, res, next) => {
     }
     const user = await getUserById(data?.id);
     if (!user) {
-      return req.status(401).send("Invalid token");
+      return res.status(401).send("Invalid token");
     }
     req.user = user;
     next();
