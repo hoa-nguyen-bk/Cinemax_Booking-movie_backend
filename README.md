@@ -85,3 +85,10 @@ B2: chạy migrate để tạo ra các column trong table của database
 ```
 sequelize db:migrate
 ```
+
+**các bước deploy code lên heroku:**
++mở project github.com/student1060632fpt/project-backend-cybersoft
++checkout về nhánh main
++`git add .` và `git commit -m <commit-description>` gì đó như bình thường vẫn hay làm
++push code lên github trước bằng các câu lệnh push : `git push origin main`
++push code lên heroku bằng câu lệnh: `git push heroku main`
