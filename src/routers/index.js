@@ -16,10 +16,9 @@ rootRouter.use("/users", userRouter);
 rootRouter.use("/ticket", ticketRouter);
 rootRouter.use("/roles", roleRouter);
 
-
 //define ra đường dẫn chính/phụ
 rootRouter.get("/", (request, response) => {
-  response.send("hello word");
+  response.send("hello word main");
 });
 
 module.exports = rootRouter;
