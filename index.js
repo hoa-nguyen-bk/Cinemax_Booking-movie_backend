@@ -6,9 +6,11 @@
 
 const express = require("express");
 const rootRouter = require("./src/routers");
-const path = require('path')
+const path = require("path");
 const { sequelize } = require("./src/models");
-const {SYSTEMS: {PORT}} = require("./src/config");
+const {
+  SYSTEMS: { PORT },
+} = require("./src/config");
 const { logger } = require("./src/middleware/logger");
 const { graphqlHTTP } = require("express-graphql");
 const graphqlSchema = require("./src/graphql/schema");
@@ -18,12 +20,24 @@ const { graphqlResolves } = require("./src/graphql/resolvers");
 const app = express();
 
 app.use(express.json());
-app.use('/public', express.static(path.join(__dirname, 'public')))
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+  );
+  next();
+});
+
+app.use("/public", express.static(path.join(__dirname, "public")));
 const mainUrl = "/api/v1";
 //dùng logger ở đây để tất cả request đều qua đây
 app.use(logger);
 //lẩy rootRouter ra import zô đây mới ăn
-app.use(mainUrl,rootRouter);
+app.use(mainUrl, rootRouter);
 
 sequelize
   .authenticate()
@@ -34,7 +48,7 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 
-  const PORT2 = process.env.PORT || PORT;
-  app.listen(PORT2, () => {
-    console.log("app listen to port ", PORT2);
-  });
+const PORT2 = process.env.PORT || PORT;
+app.listen(PORT2, () => {
+  console.log("app listen to port ", PORT2);
+});
