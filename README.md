@@ -85,3 +85,16 @@ B2: chạy migrate để tạo ra các column trong table của database
 ```
 sequelize db:migrate
 ```
+
+**Các bước setup heroku:**
+b1: `npm install -g heroku`
+b2: `heroku --version` (để check version heroku)
+b3: login vào heroku bằng câu lệnh `heroku login`, sau đó heroku sẽ bảo gõ bất kì chữ nào, và lúc đó chỉ cần gõ tạm 1 chữ và đăng nhập vào.
+b4: check lại thông tin mình đã login bằng câu lệnh `heroku login -i`
+
+**các bước deploy code lên heroku:**
++mở project github.com/student1060632fpt/project-backend-cybersoft
++checkout về nhánh main
++`git add .` và `git commit -m <commit-description>` gì đó như bình thường vẫn hay làm
++push code lên github trước bằng các câu lệnh push : `git push origin main`
++push code lên heroku bằng câu lệnh: `git push heroku main`
