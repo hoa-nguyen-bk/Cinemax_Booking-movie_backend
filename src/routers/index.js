@@ -18,7 +18,7 @@ rootRouter.use("/roles", roleRouter);
 
 //define ra đường dẫn chính/phụ
 rootRouter.get("/", (request, response) => {
-  response.send("hello word main");
+  response.send("hello word mainbranch");
 });
 
 module.exports = rootRouter;
