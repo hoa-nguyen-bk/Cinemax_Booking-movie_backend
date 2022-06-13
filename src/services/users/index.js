@@ -35,17 +35,18 @@ const getAllUser = async ({ current, pageSize, search }) => {
     });
 };
 
-const createUser = async (user,role) => {
-  try {
-    const newUser = await User.create({
-      ...user,
-      role,
+const createUser = async (user, role) => {
+  return await User.create({
+    ...user,
+    role: 1,
+  })
+    .then((newUser) => {
+      return newUser;
+    })
+    .catch((error) => {
+      console.log(error);
+      return error;
     });
-    return newUser;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 };
 
 const getUserByEmail = async (email) => {
