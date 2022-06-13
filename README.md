@@ -93,8 +93,13 @@ b3: login vào heroku bằng câu lệnh `heroku login`, sau đó heroku sẽ b�
 b4: check lại thông tin mình đã login bằng câu lệnh `heroku login -i`
 
 **các bước deploy code lên heroku:**
-+mở project github.com/student1060632fpt/project-backend-cybersoft
-+checkout về nhánh main
-+`git add .` và `git commit -m <commit-description>` gì đó như bình thường vẫn hay làm
-+push code lên github trước bằng các câu lệnh push : `git push origin main`
-+push code lên heroku bằng câu lệnh: `git push heroku main`
+
+B1: mở project github.com/student1060632fpt/project-backend-cybersoft
+
+B2: checkout về nhánh main
+
+B3: `git add .` và `git commit -m <commit-description>` gì đó như bình thường vẫn hay làm
+
+B4: push code lên github trước bằng các câu lệnh push : `git push origin main`
+
+B5: push code lên heroku bằng câu lệnh: `git push heroku main`
