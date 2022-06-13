@@ -92,6 +92,9 @@ userRouter.post("/sign-up", async (req, res) => {
     phoneNumber,
   },"user")
     .then((response) => {
+      if(!response.password){
+        return res.status(500).send(response)
+      }
       const result = { ...response };
       delete result.password;
       return res.status(201).send(response);

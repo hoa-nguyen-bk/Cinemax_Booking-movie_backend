@@ -3,7 +3,7 @@ const { authenticate } = require("../../middleware");
 const { getListRole, checkRoleExist, getListUserByRole } = require("../../services/users/roles");
 const roleRouter = express.Router();
 
-roleRouter.get("/", [authenticate], async (req, res) => {
+roleRouter.get("/", async (req, res) => {
   const roles = await getListRole();
   if (!roles) {
     return res.status(500).send("Cannot get roles");

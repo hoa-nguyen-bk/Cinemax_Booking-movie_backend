@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         as:'avatar',
       });
       this.belongsTo(Role,{
-        foreignKey: "roleId",
-        as:'roles',
+        foreignKey: "role",
+        as:'roleId',
       });
 
       
@@ -44,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
     birthday: DataTypes.DATE,
     password: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    roleId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
