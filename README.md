@@ -94,12 +94,64 @@ b4: check lại thông tin mình đã login bằng câu lệnh `heroku login -i`
 
 **các bước deploy code lên heroku:**
 
-B1: mở project github.com/student1060632fpt/project-backend-cybersoft
+- B1: mở project github.com/student1060632fpt/project-backend-cybersoft
 
-B2: checkout về nhánh main
+- B2: checkout về nhánh main
 
-B3: `git add .` và `git commit -m <commit-description>` gì đó như bình thường vẫn hay làm
+- B3: `git add .` và `git commit -m <commit-description>` gì đó như bình thường vẫn hay làm
 
-B4: push code lên github trước bằng các câu lệnh push : `git push origin main`
+- B4: push code lên github trước bằng các câu lệnh push : `git push origin main`
 
-B5: push code lên heroku bằng câu lệnh: `git push heroku main`
+- B5: push code lên heroku bằng câu lệnh: `git push heroku main`
+
+
+## Các bước setup database ở local
+
+- Bước 1: vào file `src/config/index.js `
+- Bước 2: tạo biến để kết nối với database ở máy local cá nhân trong đó có:
+
+```
+const localQuang = {
+    username: "root",
+    password: "",
+    database: "",
+    host: "localhost",
+    dialect: "mysql",
+  },
+```
+
+Với các trường phù hợp với trong hình
+![database setup](https://cdn.discordapp.com/attachments/924836598313541663/986126747420475482/unknown.png)
+và dialect là mysql tại vì chúng ta đang xài mysql
+
+- bước 3: đưa biến localQuang vào biến config
+
+```
+const config = {
+  auth: {
+    SECRET_KEY: "nodejs-20",
+  },
+  SYSTEMS: {
+    PORT: 3000,
+    HOST: "http://localhost:",
+    DOMAIN: "http://localhost:3000",
+  },
+  development: dbConnect,
+  test: dbConnect,
+  production: dbConnect,
+  localHoa: {
+    username: "root",
+    password: "12345678",
+    database: "hoa_movie",
+    host: "localhost",
+    dialect: "mysql",
+  },
+  //localQuang right here
+  localQuang
+};
+```
+
+- bước 4: vào 2 thư mục `.sequelizerc` và `src/models/index.js` như trong hình đổi biến **localHoa** thành **localQuang**
+  ![database setup](https://cdn.discordapp.com/attachments/924836598313541663/986127771971514368/unknown.png)
+
+- bước 5: chạy lại yarn run start
