@@ -4,6 +4,9 @@
 Hòa
 Quang
 
+**Link swagger**
+https://swagger-nodejs-api-2022.herokuapp.com/api-docs/#/Books/delete_books__id_
+
 **Các bước setup:**
 Đọc cái doc này trước
 https://www.bezkoder.com/deploy-node-js-app-heroku-cleardb-mysql/
