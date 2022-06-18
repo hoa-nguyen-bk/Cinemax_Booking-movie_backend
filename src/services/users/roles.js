@@ -3,7 +3,7 @@
 const { Role } = require("../../models");
 const getListRole = async () => {
   return await Role.findAll({
-    attributes: ["type", "description"],
+    attributes: ["id","type", "description"],
   })
     .then((res) => res)
     .catch((err) => {

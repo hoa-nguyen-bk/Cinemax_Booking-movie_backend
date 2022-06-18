@@ -1,5 +1,5 @@
 "use strict";
-const { Avatar, User, Movie } = require("../../models");
+const { Avatar, User, Movie, Role } = require("../../models");
 const { Op } = require("sequelize");
 
 const getAllUser = async ({ current, pageSize, search }) => {
@@ -17,7 +17,13 @@ const getAllUser = async ({ current, pageSize, search }) => {
           "email",
           "birthday",
           "phoneNumber",
-          "role",
+          "roleId",
+        ],
+        include:[
+          {
+            model: Role,
+            as: "role",
+          },
         ],
         limit,
         offset,
@@ -25,20 +31,19 @@ const getAllUser = async ({ current, pageSize, search }) => {
       })
         .then((res) => ({ result: res, count: data.count, pages }))
         .catch((userFindAllError) => {
-          console.log({ userFindAllError });
-          return null;
+          return userFindAllError;
         });
     })
     .catch((userFindAndCountAllError) => {
       console.log({ userFindAndCountAllError });
-      return null;
+      return userFindAndCountAllError;
     });
 };
 
 const createUser = async (user, role) => {
   return await User.create({
     ...user,
-    role: 1,
+    roleId: 1,
   })
     .then((newUser) => {
       return newUser;
@@ -58,11 +63,15 @@ const getUserByEmail = async (email) => {
       },
       include: [
         {
+          model: Role,
+          as: "role",
+        },
+        {
           model: Avatar,
           as: "avatar",
-          // where: {
-          //   isActive: true
-          // }
+          where: {
+            isActive: true,
+          },
         },
         {
           model: Avatar,
@@ -70,24 +79,34 @@ const getUserByEmail = async (email) => {
         },
       ],
     });
+    console.log({ user });
     return user;
   } catch (error) {
-    return console.log(error, "err");
+    return error;
   }
 };
 
 const getUserById = async (id) => {
-  return await User.findOne({
-    where: {
-      id,
+  return await User.findOne(
+    {
+      where: {
+        id,
+      },
+      include: [
+        // {
+        //   model: Role,
+        //   as: "role",
+        // },
+      ],
     },
-  })
+  )
     .then((user) => {
       console.log({ user });
       return user;
     })
     .catch((error) => {
-      return console.log(error, "err nè");
+      console.log(error, "err nè")
+      return error;
     });
 };
 const checkNullUserId = async (id) => {

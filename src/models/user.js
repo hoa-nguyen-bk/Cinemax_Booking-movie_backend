@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         as:'avatar',
       });
       this.belongsTo(Role,{
-        foreignKey: "role",
-        as:'roleId',
+        foreignKey: "roleId",
+        as:'role',
       });
 
       

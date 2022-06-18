@@ -25,16 +25,19 @@ const userRouter = express.Router();
 userRouter.get("/", async (req, res) => {
   const { current, pageSize, search } = req?.query;
 
-  const users = await getAllUser({ current, pageSize, search });
-  if (!users) {
-    return res.status(500).send("Cannot get users list");
-  }
-  const result = {
-    totalPages: users.pages,
-    totalCount: users.count,
-    items: users.result,
-  };
-  return res.send(result);
+ return await getAllUser({ current, pageSize, search }).then(users => {
+   if (!users) {
+     return res.status(500).send("Cannot get users list");
+    }
+    const result = {
+      totalPages: users.pages,
+      totalCount: users.count,
+      items: users.result,
+    };
+    return res.send(result);
+  }).catch(err=>{
+    return res.status(500).send(err)
+  })
 });
 //lấy detail
 userRouter.get(`/detail`, async (req, res) => {
