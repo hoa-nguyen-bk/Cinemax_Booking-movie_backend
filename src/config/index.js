@@ -5,7 +5,6 @@ const dbConnect = {
   host: "us-cdbr-east-05.cleardb.net",
   dialect: "mysql",
 };
-
 const config = {
   auth: {
     SECRET_KEY: "nodejs-20",

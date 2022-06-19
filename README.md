@@ -47,15 +47,12 @@ to avoid the error not auth or something
     mysql --user=root --password=12345678
 
 to start setup
-mysql://be16359ee2a58c:91334c16@us-cdbr-east-05.cleardb.net/heroku_714e0d2370734dd?reconnect=true
 
-    mysql --host=us-cdbr-east-05.cleardb.net --user=be16359ee2a58c --password=91334c16 --reconnect heroku_714e0d2370734dd
-
-then let's run in heroku clear db
+then let's run in heroku clear db in another terminal
 
     heroku run node index.js  
 
-another setup in feat/express
+Setup
 
     mysql://ba7c77fbbb8b35:ad3b9bb0@us-cdbr-east-05.cleardb.net/heroku_316385522d009b6?reconnect=true
 
@@ -90,10 +87,10 @@ sequelize db:migrate
 ```
 
 **Các bước setup heroku:**
-b1: `npm install -g heroku`
-b2: `heroku --version` (để check version heroku)
-b3: login vào heroku bằng câu lệnh `heroku login`, sau đó heroku sẽ bảo gõ bất kì chữ nào, và lúc đó chỉ cần gõ tạm 1 chữ và đăng nhập vào.
-b4: check lại thông tin mình đã login bằng câu lệnh `heroku login -i`
+- b1: `npm install -g heroku`
+- b2: `heroku --version` (để check version heroku)
+- b3: login vào heroku bằng câu lệnh `heroku login`, sau đó heroku sẽ bảo gõ bất kì chữ nào, và lúc đó chỉ cần gõ tạm 1 chữ và đăng nhập vào.
+- b4 (Optional): check lại thông tin mình đã login bằng câu lệnh `heroku login -i`
 
 **các bước deploy code lên heroku:**
 
@@ -158,3 +155,27 @@ const config = {
   ![database setup](https://cdn.discordapp.com/attachments/924836598313541663/986127771971514368/unknown.png)
 
 - bước 5: chạy lại yarn run start
+## Các bước setup database từ local qua lại heroku
+- B1: ở file `.sequelize` và `src\config\index.js` ta đổi biến `localHoa` hoặc `localQuang` được đưa làm ví dụ ở trên thành biến `development`
+![change variable database name](https://cdn.discordapp.com/attachments/984347898261159947/987942814841196575/unknown.png)
+![change variable](https://cdn.discordapp.com/attachments/984347898261159947/987944224240590878/unknown.png)
+- B2: login vào heroku bằng câu lệnh `heroku login`, sau đó heroku sẽ bảo gõ bất kì chữ nào, và lúc đó chỉ cần gõ tạm 1 chữ và đăng nhập vào.
+- B4 (Optional): check lại thông tin mình đã login bằng câu lệnh `heroku login -i`
+- B5: Để test app và db chạy ổn hay không trên máy local, ta chạy lệnh `heroku local`. Vì đây là chạy trên máy local nên *chưa có db*, nhưng vẫn QUAN TRỌNG VÀ cần chạy thử để test trường hợp nếu bị lỗi khi migrate hay seeder một entity nào đó
+  - Test thử trên database 
+  - Nếu chạy ổn và không hiện lỗi nào thì test thử call api trên postman với `domain` là `herokuDomain`
+![run in postman](https://cdn.discordapp.com/attachments/984347898261159947/987958377697136690/unknown.png)
+  - Và chạy thử trên api chưa có gì hết là api get roles
+![in roles](https://cdn.discordapp.com/attachments/984347898261159947/987958794879402004/unknown.png)
+  - Sau khi chạy ổn mà không bị bug nào bạn có thể close  terminal và chuyển đến bước 6
+- B6: Chạy trên heroku luôn bằng câu lệnh 
+  ```heroku run node index.js``` 
+  - B6.1: Ở bước này, ta nên xóa các db cũ bằng cách dùng lệnh ```sequelize db:migrate:undo```
+    - Ở bước B6.1 nếu gặp lỗi `Cannot delete or update a parent row: a foreign key constraint fails`. Ta phải vào dbeaver xóa tay từng table một, bắt đầu từ table roles, hiện tại chưa nghĩ ra cách nào nhanh hơn
+    - Sau đó tạo lại 
+  
+  - Sau đó migrate lại bằng lệnh `sequelize db:migrate`
+  - Và chạy seeder để tạo các data cần phải có `npx sequelize-cli db:seed:all`
+
+
+
