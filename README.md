@@ -45,6 +45,7 @@ to avoid the error mysql is not recognied
 to avoid the error not auth or something
 
     mysql --user=root --password=12345678
+    mysql --user=ba7c77fbbb8b35 --password=ad3b9bb0 --database=heroku_316385522d009b6 --host=us-cdbr-east-05.cleardb.net
 
 to start setup
 
@@ -52,7 +53,7 @@ then let's run in heroku clear db in another terminal
 
     heroku run node index.js  
 
-Setup
+This is Setup link
 
     mysql://ba7c77fbbb8b35:ad3b9bb0@us-cdbr-east-05.cleardb.net/heroku_316385522d009b6?reconnect=true
 
@@ -74,7 +75,7 @@ We alse have a procfile, which is declare here
 https://devcenter.heroku.com/articles/getting-started-with-nodejs#define-a-procfile
 
 
-**Các bước tạo một database mới**
+**Các bước tạo một table mới**
 
 Ví dụ: làm một api lấy danh sách quyền của người dùng
 B1: chạy câu lệnh trong terminal để tạo model role
