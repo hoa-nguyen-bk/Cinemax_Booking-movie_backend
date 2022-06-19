@@ -6,6 +6,14 @@ const dbConnect = {
   dialect: "mysql",
 };
 
+const localQuang = {
+  username: "root",
+  password: "123456789",
+  database: "localQuang",
+  host: "localhost",
+  dialect: "mysql",
+};
+
 const config = {
   auth: {
     SECRET_KEY: "nodejs-20",
@@ -25,5 +33,6 @@ const config = {
     host: "localhost",
     dialect: "mysql",
   },
+  localQuang,
 };
 module.exports = config;

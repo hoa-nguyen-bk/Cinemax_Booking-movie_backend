@@ -1,6 +1,6 @@
 "use strict";
 const { Sequelize } = require("sequelize");
-const env = process.env.NODE_ENV || "localHoa";
+const env = process.env.NODE_ENV || "localQuang";
 const config = require("../config")[env];
 const fs = require("fs");
 const path = require("path");
@@ -37,11 +37,14 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-}).catch(err => {
-  console.log(err);
-})
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    console.log("Drop and re-sync db.");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

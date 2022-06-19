@@ -6,6 +6,7 @@ const movieRouter = require("./movies");
 const ticketRouter = require("./tickets");
 const userRouter = require("./users");
 const roleRouter = require("./users/roles");
+const systemTheaterRouter = require("./systemTheater/index");
 
 //rôi router từ thằng express
 const rootRouter = express.Router();
@@ -15,6 +16,7 @@ rootRouter.use("/movies", movieRouter);
 rootRouter.use("/users", userRouter);
 rootRouter.use("/ticket", ticketRouter);
 rootRouter.use("/roles", roleRouter);
+rootRouter.use("/system-theater", systemTheaterRouter);
 
 //define ra đường dẫn chính/phụ
 rootRouter.get("/", (request, response) => {
