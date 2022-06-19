@@ -1,5 +1,5 @@
 "use strict";
-const { Avatar, User, Movie, Role } = require("../../models");
+const { Avatar, User, Movie, Role, SystemTheater } = require("../../models");
 const { Op } = require("sequelize");
 
 const getAllUser = async ({ current, pageSize, search }) => {
@@ -19,7 +19,7 @@ const getAllUser = async ({ current, pageSize, search }) => {
           "phoneNumber",
           "roleId",
         ],
-        include:[
+        include: [
           {
             model: Role,
             as: "role",
@@ -87,25 +87,23 @@ const getUserByEmail = async (email) => {
 };
 
 const getUserById = async (id) => {
-  return await User.findOne(
-    {
-      where: {
-        id,
-      },
-      include: [
-        // {
-        //   model: Role,
-        //   as: "role",
-        // },
-      ],
+  return await User.findOne({
+    where: {
+      id,
     },
-  )
+    include: [
+      // {
+      //   model: Role,
+      //   as: "role",
+      // },
+    ],
+  })
     .then((user) => {
       console.log({ user });
       return user;
     })
     .catch((error) => {
-      console.log(error, "err nè")
+      console.log(error, "err nè");
       return error;
     });
 };
