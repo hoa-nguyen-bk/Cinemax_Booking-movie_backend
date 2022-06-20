@@ -1,7 +1,7 @@
 const dbConnect = {
-  username: "ba7c77fbbb8b35",
-  password: "ad3b9bb0",
-  database: "heroku_316385522d009b6",
+  username: "bfd2557cd29e86",
+  password: "5cb9f2ce",
+  database: "heroku_efed8e9ad8e8217",
   host: "us-cdbr-east-05.cleardb.net",
   dialect: "mysql",
 };

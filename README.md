@@ -55,19 +55,21 @@ then let's run in heroku clear db in another terminal
 
 This is Setup link
 
-    mysql://ba7c77fbbb8b35:ad3b9bb0@us-cdbr-east-05.cleardb.net/heroku_316385522d009b6?reconnect=true
-
+    mysql://bfd2557cd29e86:5cb9f2ce@us-cdbr-east-05.cleardb.net/heroku_efed8e9ad8e8217?reconnect=true
     
 and then go to mysql
 
-    mysql --host=us-cdbr-east-05.cleardb.net --user=ba7c77fbbb8b35 --password=ad3b9bb0 --reconnect heroku_316385522d009b6
+    mysql --host=us-cdbr-east-05.cleardb.net --user=bfd2557cd29e86 --password=5cb9f2ce --reconnect heroku_efed8e9ad8e8217
+
+Migrating an existing database to ClearDB
+    heroku addons:create cleardb:ignite --fork=mysql://bfd2557cd29e86:5cb9f2ce@us-cdbr-east-05.cleardb.net/heroku_efed8e9ad8e8217?reconnect=true
 
 Also, you need to set the environment variables for your running Heroku's app:
 
-    heroku config:set DB_USER=ba7c77fbbb8b35
-    heroku config:set DB_PASSWORD=ad3b9bb0
+    heroku config:set DB_USER=bfd2557cd29e86
+    heroku config:set DB_PASSWORD=5cb9f2ce
     heroku config:set DB_HOST=us-cdbr-east-05.cleardb.net
-    heroku config:set DATABASE=heroku_316385522d009b6
+    heroku config:set DATABASE=heroku_efed8e9ad8e8217
 
 
 We alse have a procfile, which is declare here
@@ -179,4 +181,4 @@ const config = {
   - Và chạy seeder để tạo các data cần phải có `npx sequelize-cli db:seed:all`
 
 
-
+cba
