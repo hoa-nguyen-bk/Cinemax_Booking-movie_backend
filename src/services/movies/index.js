@@ -8,12 +8,6 @@ const getAllMovies = async () => {
       console.log(err);
       return null;
     });
-  // try {
-  //   return Movie.findAll();
-  // } catch (error) {
-  //   console.log(error);
-  //   return null;
-  // }
 };
 
 const createMovie = async (movies) => {

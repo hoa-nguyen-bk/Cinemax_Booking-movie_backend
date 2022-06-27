@@ -4,18 +4,23 @@ const express = require("express");
 
 const systemTheaterRouter = express.Router();
 
-const { createSystemTheater } = require("../../services/systemTheater");
+const {
+  createSystemTheater,
+  getAllSystemtheater,
+} = require("../../services/systemTheater");
 
 systemTheaterRouter.get("/", async (req, res) => {
-  res.send("hello word movie");
+  const { maHeThongRap } = req.query;
+  const systemTheater = await getAllSystemtheater(maHeThongRap);
+  if (!systemTheater) {
+    res.status(500).send("Cannot get movie list");
+  }
+  res.send(systemTheater);
 });
 
 systemTheaterRouter.post("/create-system-theater", async (req, res) => {
   const { tenHeThongRap, biDanh, logo } = req?.body;
-  // if (!email || !email.trim() || !password || !password.trim()) {
-  //   return await res.status(400).send("error: must field email or pass");
-  // }
-  console.log("tenHeThongRap, biDanh, logo", tenHeThongRap, biDanh, logo);
+
   return await createSystemTheater({ tenHeThongRap, biDanh, logo })
     .then((response) => {
       if (!response.password) {

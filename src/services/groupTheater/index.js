@@ -1,10 +1,17 @@
 "use strict";
-const { Avatar, User, Movie, Role, SystemTheater } = require("../../models");
+const {
+  Avatar,
+  User,
+  Movie,
+  Role,
+  SystemTheater,
+  GroupTheater,
+} = require("../../models");
 const { Op } = require("sequelize");
 
-const createSystemTheater = async (systemTheater) => {
-  return await SystemTheater.create({
-    ...systemTheater,
+const createGroupTheater = async (groupTheater) => {
+  return await GroupTheater.create({
+    ...groupTheater,
   })
     .then((newUser) => {
       return newUser;
@@ -15,10 +22,10 @@ const createSystemTheater = async (systemTheater) => {
     });
 };
 
-const getAllSystemtheater = async (maHeThongRap) => {
-  return await SystemTheater.findAll({
+const getAllGrouptheater = async (maHeThongRap) => {
+  return await GroupTheater.findAll({
     where: {
-      tenHeThongRap: { [Op.like]: `%${maHeThongRap}%` },
+      maHeThongRap,
     },
   })
     .then((res) => res)
@@ -29,8 +36,8 @@ const getAllSystemtheater = async (maHeThongRap) => {
 };
 
 module.exports = {
-  createSystemTheater,
-  getAllSystemtheater,
+  createGroupTheater,
+  getAllGrouptheater,
   // getUserByEmail,
   // checkNullUserId,
   // getUserById,

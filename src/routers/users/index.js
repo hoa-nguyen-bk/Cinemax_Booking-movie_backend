@@ -25,19 +25,21 @@ const userRouter = express.Router();
 userRouter.get("/", async (req, res) => {
   const { current, pageSize, search } = req?.query;
 
- return await getAllUser({ current, pageSize, search }).then(users => {
-   if (!users) {
-     return res.status(500).send("Cannot get users list");
-    }
-    const result = {
-      totalPages: users.pages,
-      totalCount: users.count,
-      items: users.result,
-    };
-    return res.send(result);
-  }).catch(err=>{
-    return res.status(500).send(err)
-  })
+  return await getAllUser({ current, pageSize, search })
+    .then((users) => {
+      if (!users) {
+        return res.status(500).send("Cannot get users list");
+      }
+      const result = {
+        totalPages: users.pages,
+        totalCount: users.count,
+        items: users.result,
+      };
+      return res.send(result);
+    })
+    .catch((err) => {
+      return res.status(500).send(err);
+    });
 });
 //lấy detail
 userRouter.get(`/detail`, async (req, res) => {
@@ -86,17 +88,20 @@ userRouter.post("/sign-up", async (req, res) => {
     return await res.status(400).send("error: must field email or pass");
   }
 
-  return await createUser({
-    firstName,
-    lastName,
-    email,
-    birthday,
-    password: scriptPassword(password),
-    phoneNumber,
-  },"user")
+  return await createUser(
+    {
+      firstName,
+      lastName,
+      email,
+      birthday,
+      password: scriptPassword(password),
+      phoneNumber,
+    },
+    "user"
+  )
     .then((response) => {
-      if(!response.password){
-        return res.status(500).send(response)
+      if (!response.password) {
+        return res.status(500).send(response);
       }
       const result = { ...response };
       delete result.password;
@@ -145,10 +150,9 @@ userRouter.get("/history", [authenticate], async (req, res) => {
   // chỗ này user đc lấy từ sequelize nên chỉ cần tạo cái alias bên models, thì có thể get movie đc
   // const data = await user.getMovies()
   //còn đây là cách truyền thống
-  console.log(user.id,"user.id");
   return await getMovieHistoryByUser(user.id)
     .then((result) => {
-      console.log({result});
+      console.log({ result });
       return res.status(200).send(result);
     })
     .catch((err) => {
