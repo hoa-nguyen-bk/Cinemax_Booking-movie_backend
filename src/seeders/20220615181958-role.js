@@ -6,12 +6,14 @@ module.exports = {
       "Roles",
       [
         {
+          id: 1,
           type: "user",
           description: "customer",
           createdAt: "2022-06-12 16:22:22",
           updatedAt: "2022-06-12 16:22:22",
         },
         {
+          id: 2,
           type: "admin",
           description: "administrator",
           createdAt: "2022-06-12 16:22:22",

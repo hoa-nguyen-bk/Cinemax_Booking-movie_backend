@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "migrate": "sequelize db:migrate",
+    "migrate": "npx sequelize db:migrate && npm run seeder",
     "undo-migrate": "sequelize db:migrate:undo",
-    "seeder": "npx sequelize-cli db:seed:all"
+    "seeder": "npx sequelize-cli db:seed"
   },
   "engines": {
     "node": ">= 14.17.6"
