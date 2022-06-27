@@ -3,7 +3,7 @@
 //đầu tiên: yarn init -y
 //yarn add nodemon và express
 // đưa nodemon vào devDependencies
-
+const cors = require("cors");
 const express = require("express");
 const rootRouter = require("./src/routers");
 const path = require("path");
@@ -18,6 +18,8 @@ const { graphqlResolves } = require("./src/graphql/resolvers");
 
 //thằng app này sẽ là app cha bao hết ứng dụng
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
