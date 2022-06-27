@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "maHeThongRap",
         as: "heThongRap",
       });
+      this.hasMany(models.ShowTime, {
+        foreignKey: "codeGroupTheater",
+        as: "GroupTheater",
+      });
     }
   }
   GroupTheater.init(

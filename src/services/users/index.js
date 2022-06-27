@@ -69,9 +69,9 @@ const getUserByEmail = async (email) => {
         {
           model: Avatar,
           as: "avatar",
-          where: {
-            isActive: true,
-          },
+          // where: {
+          //   isActive: true,
+          // },
         },
         {
           model: Avatar,
