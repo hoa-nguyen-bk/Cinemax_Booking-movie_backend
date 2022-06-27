@@ -1,5 +1,5 @@
 "use strict";
-const { Movie } = require("../../../models");
+const { Movie } = require("../../models");
 
 const getAllMovies = async () => {
   return await Movie.findAll()
@@ -25,7 +25,7 @@ const createMovie = async (movies) => {
 
 const updateMoviebyId = async (id, movies) => {
   try {
-    const movie = Movie.update(movies,{
+    const movie = await Movie.update(movies,{
       where: {
         id,
       },

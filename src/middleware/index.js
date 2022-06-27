@@ -1,20 +1,23 @@
 const { decodeToken } = require("../services/auth");
-const {getUserById} = require("./../services/users")
+const { getUserById } = require("./../services/users");
 
 const authenticate = async (req, res, next) => {
   try {
-    const token = req?.header('Authorization')?.split(' ')[1];
-
+    const token = req?.header("Authorization")?.split(" ")[1];
+    if (!token) return res.status(401).send("No token provided");
     const data = await decodeToken(token);
-    const user = await getUserById(data.id);
-    if (!user){
-      return req.status(401).send('Invalid token');
-    } 
+    if (!data || !data?.id) {
+      return res.status(401).send("Wrong input token, please login again");
+    }
+    const user = await getUserById(data?.id);
+    if (!user) {
+      return res.status(401).send("Invalid token");
+    }
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).send('You are unauthorized')
-    return console.log(error);
+    res.status(401).send("Token is not valid. You are unauthorized");
+    return console.log({ error });
   }
 };
 
@@ -26,5 +29,4 @@ const checkRole = (role) => (req, res, next) => {
   next();
 };
 
-module.exports = {checkRole, authenticate };
-
+module.exports = { checkRole, authenticate };

@@ -1,4 +1,4 @@
-const {Ticket} = require('../../../models');
+const {Ticket} = require('../../models');
 const express = require("express");
 const createTicket = async (userId, movieId) => {
   try {

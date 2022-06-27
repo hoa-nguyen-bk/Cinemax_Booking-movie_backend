@@ -4,16 +4,79 @@ const express = require("express");
 const config = require("../../config");
 const { authenticate } = require("../../middleware");
 const { uploadAvatar } = require("../../middleware/upload");
-const { scriptPassword, comparePassword, genToken } = require("../../services/auth");
-const { createUser, getUserByEmail, getUserById, storageAvatar, getMovieHistoryByUser, getAllUser } = require("../../services/users");
+const {
+  scriptPassword,
+  comparePassword,
+  genToken,
+} = require("../../services/auth");
+const {
+  createUser,
+  getUserByEmail,
+  getUserById,
+  storageAvatar,
+  getMovieHistoryByUser,
+  getAllUser,
+  checkNullUserId,
+  updateUserbyId,
+  deleteUserById,
+} = require("../../services/users");
 
 const userRouter = express.Router();
 userRouter.get("/", async (req, res) => {
-  const users = await getAllUser();
-  if (!users) {
-    res.status(500).send("Cannot get users list");
+  const { current, pageSize, search } = req?.query;
+
+ return await getAllUser({ current, pageSize, search }).then(users => {
+   if (!users) {
+     return res.status(500).send("Cannot get users list");
+    }
+    const result = {
+      totalPages: users.pages,
+      totalCount: users.count,
+      items: users.result,
+    };
+    return res.send(result);
+  }).catch(err=>{
+    return res.status(500).send(err)
+  })
+});
+//lấy detail
+userRouter.get(`/detail`, async (req, res) => {
+  const { id } = req.query;
+  const userDetail = await getUserById(id);
+  if (!userDetail) {
+    return res.status(500).send(`User ${id} is not exist`);
   }
-  res.send(users);
+  return res.status(201).send(userDetail);
+});
+
+//cập nhật thông tin user
+userRouter.put(`/:id`, async (req, res) => {
+  const { lastName, firstName, email, birthday, phoneNumber, password } =
+    req?.body;
+  const { id = "" } = req?.params;
+  const isExistUser = await checkNullUserId(id);
+  if (!isExistUser) {
+    return res.status(404).send(`User ${id} is not exist`);
+  }
+  if (!firstName || !lastName || !email) {
+    return await res
+      .status(400)
+      .send("error: must field firstName, last name and email");
+  }
+  return await updateUserbyId(id, {
+    firstName,
+    lastName,
+    birthday,
+    email,
+    phoneNumber,
+    password: scriptPassword(password),
+  })
+    .then((result) => {
+      return res.status(201).send(req?.body);
+    })
+    .catch((error) => {
+      return res.status(500).send(error);
+    });
 });
 
 userRouter.post("/sign-up", async (req, res) => {
@@ -30,9 +93,11 @@ userRouter.post("/sign-up", async (req, res) => {
     birthday,
     password: scriptPassword(password),
     phoneNumber,
-    role: 'user'
-  })
+  },"user")
     .then((response) => {
+      if(!response.password){
+        return res.status(500).send(response)
+      }
       const result = { ...response };
       delete result.password;
       return res.status(201).send(response);
@@ -59,31 +124,60 @@ userRouter.post("/sign-in", async (req, res) => {
   if (!isMatchPassword) {
     return res.status(400).send("Password is not correct");
   }
-  const token = genToken({id: user.id});
-  return res.status(200).send({user,token});
+  const token = genToken({ id: user.id });
+  return res.status(200).send({ user, token });
 });
-const path = 'public/images/avatar';
-userRouter.post('/avatar', [authenticate, uploadAvatar(path)], async(req,res) => {
-  const {file,user} = req;
-  const url = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`;
-  const storeAvatar = await storageAvatar(user.id,url);
-  return res.status(200).send(storeAvatar)
-})
+const path = "public/images/avatar";
+userRouter.post(
+  "/avatar",
+  [authenticate, uploadAvatar(path)],
+  async (req, res) => {
+    const { file, user } = req;
+    const url = `${config.SYSTEMS.HOST}${config.SYSTEMS.PORT}/${file?.path}`;
+    const storeAvatar = await storageAvatar(user.id, url);
+    return res.status(200).send(storeAvatar);
+  }
+);
 
 //lấy danh sách phim mà user đã xem
-userRouter.get('/history', [authenticate], async(req,res) => {
-  const {user} = req;
+userRouter.get("/history", [authenticate], async (req, res) => {
+  const { user } = req;
   // chỗ này user đc lấy từ sequelize nên chỉ cần tạo cái alias bên models, thì có thể get movie đc
   // const data = await user.getMovies()
   //còn đây là cách truyền thống
-  const data = await getMovieHistoryByUser(user.id);
-  if(!data){
-    return res.status(500).send('cannot get data');
+  console.log(user.id,"user.id");
+  return await getMovieHistoryByUser(user.id)
+    .then((result) => {
+      console.log({result});
+      return res.status(200).send(result);
+    })
+    .catch((err) => {
+      return res.status(500).send("cannot get history");
+    });
+});
+
+//lấy thông tin tài khoản
+userRouter.get("/profile", [authenticate], async (req, res) => {
+  const { user } = req;
+  if (!user) {
+    return res.status(500).send("cannot get user, please login again");
   }
-  return res.status(200).send(data)
-})
+  return res.status(200).send(user);
+});
 
-
-
+//delete
+userRouter.delete(`/:id`, async (req, res) => {
+  const { id } = req.params;
+  const isExistUser = await checkNullUserId(id);
+  // check user is exist by id
+  if (!isExistUser) {
+    return res.status(404).send(`User ${id} is not exist`);
+  }
+  const userDeleted = await deleteUserById(id);
+  if (!userDeleted) {
+    return res.status(500).send(`user ${id} cannot delete`);
+  }
+  return res.status(201).send(`Delete user ${id} success`);
+});
 
 module.exports = userRouter;

@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       birthday: {
         type: Sequelize.DATE
@@ -26,9 +27,7 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING
       },
-      role: {
-        type: Sequelize.STRING
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

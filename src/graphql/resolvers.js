@@ -1,6 +1,6 @@
 const { scriptPassword } = require("../services/auth");
 const { getUserById, createUser } = require("../services/users");
-const {User, Avatar} = require("./../../models");
+const {User, Avatar} = require("./../models");
 const graphqlResolves = {
   async getAllUser() {
     try {
@@ -19,7 +19,6 @@ const graphqlResolves = {
           },
         ]
       });
-      console.log(userList,"userList");
       return userList;
     } catch (error) {
       throw new Error(error);
