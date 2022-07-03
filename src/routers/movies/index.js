@@ -56,7 +56,7 @@ movieRouter.put(`/:id`, async (req, res) => {
   if (!name || !name.trim() || !trailer) {
     return await res.status(400).send("error: must field name and trailer");
   }
-  await updateMoviebyId(id, {
+  const result = await updateMoviebyId(id, {
     name,
     trailer,
     poster,
