@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 const express = require("express");
 const { authenticate } = require("../../middleware");
 const { decodeToken } = require("../../services/auth");
@@ -25,7 +25,7 @@ movieRouter.get(routerDefault, async (req, res) => {
 
 movieRouter.post(routerDefault, async (req, res) => {
   const { name, trailer, poster, description, startTime, evaluate } = req?.body;
-  
+
   if (!name || !name.trim() || !trailer) {
     return await res.status(400).send("error: must field name and trailer");
   }
@@ -38,7 +38,6 @@ movieRouter.post(routerDefault, async (req, res) => {
     evaluate,
   })
     .then((result) => {
-      console.log(result, "das");
       return res.status(201).send(result);
     })
     .catch((error) => {
@@ -49,7 +48,7 @@ movieRouter.post(routerDefault, async (req, res) => {
 //update movie
 movieRouter.put(`/:id`, async (req, res) => {
   const { name, trailer, poster, description, startTime, evaluate } = req?.body;
-  const { id = ''} = req?.params;
+  const { id = "" } = req?.params;
   const isExistMovie = await checkNullId(id);
   if (!isExistMovie) {
     return res.status(404).send(`Movie ${id} is not exist`);
@@ -65,16 +64,14 @@ movieRouter.put(`/:id`, async (req, res) => {
     startTime,
     evaluate,
   });
-  console.log(result, "das");
   res.status(201).send(result);
-  //  res.status(500).send(error);
 });
 
 //delete
-movieRouter.delete(`${routerDefault}:id`,authenticate, async (req, res) => {
+movieRouter.delete(`${routerDefault}:id`, authenticate, async (req, res) => {
   const { id } = req.params;
   const isExistMovie = await checkNullId(id);
-    // check user is exist by id 
+  // check user is exist by id
   if (!isExistMovie) {
     return res.status(404).send(`Movie ${id} is not exist`);
   }
