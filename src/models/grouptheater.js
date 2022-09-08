@@ -13,9 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "maHeThongRap",
         as: "heThongRap",
       });
+      //lien ket với seat và show time
       this.hasMany(models.ShowTime, {
-        foreignKey: "codeGroupTheater",
-        as: "GroupTheater",
+        foreignKey: "codeGroupTheaterShowTime",
+        as: "showTime",
+      });
+      this.hasMany(models.Seat, {
+        foreignKey: "codeGroupTheaterSeat",
+        as: "seat",
       });
     }
   }
