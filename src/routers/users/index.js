@@ -30,25 +30,22 @@ userRouter.get("/", async (req, res) => {
       if (!users) {
         return res.status(500).send("Cannot get users list");
       }
-      const {
-        lastName = "",
-        firstName = "",
-        email = "",
-        birthday = "",
-        phoneNumber = "",
-        role = "",
-      } = users.result;
+     
+      const listUser = users?.result && users?.result?.length !== 0 ? users.result.map(item => {
+        const {
+          lastName = "",
+          firstName = "",
+          email = "",
+          birthday = "",
+          phoneNumber = "",
+          role : {description = "no roles"},
+        } = item;
+        return {lastName, firstName, email, birthday, phoneNumber, role: description}
+      }) : []
       const result = {
         totalPages: users?.pages,
         totalCount: users?.count,
-        items: {
-          lastName,
-          firstName,
-          email,
-          birthday,
-          phoneNumber,
-          role: role?.description,
-        },
+        listUser
       };
       return res.send(result);
     })
