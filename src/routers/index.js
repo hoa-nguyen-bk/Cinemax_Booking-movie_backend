@@ -8,6 +8,7 @@ const userRouter = require("./users");
 const roleRouter = require("./users/roles");
 const systemTheaterRouter = require("./systemTheater/index");
 const groupTheaterRouter = require("./groupTheater/index");
+const showTimeRouter = require("./showTime");
 
 //rôi router từ thằng express
 const rootRouter = express.Router();
@@ -19,6 +20,7 @@ rootRouter.use("/ticket", ticketRouter);
 rootRouter.use("/roles", roleRouter);
 rootRouter.use("/system-theater", systemTheaterRouter);
 rootRouter.use("/group-theater", groupTheaterRouter);
+rootRouter.use("/show-time", showTimeRouter);
 
 //define ra đường dẫn chính/phụ
 rootRouter.get("/", (request, response) => {

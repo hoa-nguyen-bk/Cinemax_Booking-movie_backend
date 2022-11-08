@@ -16,16 +16,26 @@ const createSystemTheater = async (systemTheater) => {
 };
 
 const getAllSystemtheater = async (maHeThongRap) => {
-  return await SystemTheater.findAll({
-    where: {
-      tenHeThongRap: { [Op.like]: `%${maHeThongRap}%` },
-    },
-  })
-    .then((res) => res)
-    .catch((err) => {
-      console.log(err);
-      return null;
-    });
+  if (maHeThongRap !== undefined) {
+    return await SystemTheater.findAll({
+      where: {
+        tenHeThongRap: { [Op.like]: `%${maHeThongRap}%` },
+      },
+    })
+      .then((res) => res)
+      .catch((err) => {
+        console.log("err", err);
+        return null;
+      });
+  } else {
+    return SystemTheater.findAll()
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
 };
 
 module.exports = {

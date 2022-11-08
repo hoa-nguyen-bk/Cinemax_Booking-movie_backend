@@ -13,7 +13,7 @@ groupTheaterRouter.get("/", async (req, res) => {
   const { maHeThongRap } = req.query;
   const groupTheater = await getAllGrouptheater(maHeThongRap);
   if (!groupTheater) {
-    res.status(500).send("Cannot get movie list");
+    res.status(500).send("Cannot get group theater list");
   }
   res.send(groupTheater);
 });

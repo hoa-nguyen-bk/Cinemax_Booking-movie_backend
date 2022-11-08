@@ -13,9 +13,9 @@ systemTheaterRouter.get("/", async (req, res) => {
   const { maHeThongRap } = req.query;
   const systemTheater = await getAllSystemtheater(maHeThongRap);
   if (!systemTheater) {
-    res.status(500).send("Cannot get movie list");
+    return res.status(500).send("Cannot get movie list");
   }
-  res.send(systemTheater);
+  return res.status(200).send(systemTheater);
 });
 
 systemTheaterRouter.post("/create-system-theater", async (req, res) => {

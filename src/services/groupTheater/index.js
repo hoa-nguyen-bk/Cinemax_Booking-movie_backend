@@ -1,12 +1,5 @@
 "use strict";
-const {
-  Avatar,
-  User,
-  Movie,
-  Role,
-  SystemTheater,
-  GroupTheater,
-} = require("../../models");
+const { GroupTheater } = require("../../models");
 const { Op } = require("sequelize");
 
 const createGroupTheater = async (groupTheater) => {
@@ -17,34 +10,32 @@ const createGroupTheater = async (groupTheater) => {
       return newUser;
     })
     .catch((error) => {
-      console.log(error);
+      console.log("err", error);
       return error;
     });
 };
 
 const getAllGrouptheater = async (maHeThongRap) => {
-  return await GroupTheater.findAll({
-    where: {
-      maHeThongRap,
-    },
-  })
-    .then((res) => res)
-    .catch((err) => {
-      console.log(err);
-      return null;
-    });
+  if (maHeThongRap !== undefined) {
+    return await GroupTheater.findAll({
+      where: {
+        maHeThongRap,
+      },
+    })
+      .then((res) => res)
+      .catch((err) => {
+        console.log("err", err);
+        return null;
+      });
+  } else {
+    return GroupTheater.findAll()
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
 };
 
-module.exports = {
-  createGroupTheater,
-  getAllGrouptheater,
-  // getUserByEmail,
-  // checkNullUserId,
-  // getUserById,
-  // getAllUser,
-  // storageAvatar,
-  // updateUserbyId,
-  // getMovieHistoryByUser,
-  // getAllUser,
-  // deleteUserById,
-};
+module.exports = { createGroupTheater, getAllGrouptheater };

@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.GroupTheater, {
         foreignKey: "codeGroupTheaterShowTime",
-        // as: "GroupTheater",
+      });
+      this.belongsTo(models.Movie, {
+        foreignKey: "codeMovieShowTime",
       });
     }
   }

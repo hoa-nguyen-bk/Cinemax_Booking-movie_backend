@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "migrate": "npx sequelize db:migrate && npm run seeder",
     "undo-migrate": "sequelize db:migrate:undo",
-    "seeder": "npx sequelize-cli db:seed:all"
+    "seeder": "npx sequelize-cli db:seed:all",
+    "sedder-debug": "sequelize db:seed:all --debug"
   },
   "engines": {
     "node": ">= 14.17.6"
