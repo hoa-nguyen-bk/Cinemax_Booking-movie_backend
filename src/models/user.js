@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         as:'avatar',
       });
-      this.belongsTo(Role,{
-        foreignKey: "roleId",
-        as:'role',
-      });
+      // this.belongsTo(Role,{
+      //   foreignKey: "roleId",
+      //   as:'role',
+      // });
 
       
       this.belongsToMany(Movie,{

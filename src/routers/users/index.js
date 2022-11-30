@@ -47,6 +47,7 @@ userRouter.get("/", async (req, res) => {
         totalCount: users?.count,
         listUser
       };
+      console.log({result});
       return res.send(result);
     })
     .catch((err) => {

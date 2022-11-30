@@ -1,12 +1,11 @@
 "use strict";
 const { Sequelize } = require("sequelize");
-const env = process.env.NODE_ENV || "development";
+const env = process.env.NODE_ENV || "localHoa";
 const config = require("../config")[env];
 const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
 const db = {};
-
 let sequelize;
 if (config?.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -37,14 +36,14 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log("Drop and re-sync db.");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// sequelize
+//   .sync({ force: true })
+//   .then(() => {
+//     console.log("Drop and re-sync db.");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
