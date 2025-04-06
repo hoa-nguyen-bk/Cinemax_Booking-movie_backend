@@ -1,4 +1,4 @@
-# project-backend-cybersoft
+# Cinemax_Booking-movie_Backend
 
 **Author:**
 Hòa
